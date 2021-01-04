@@ -1,0 +1,116 @@
+@font-face {
+    font-family: 'acherusgrotesque-regular';
+    src: url('../polices/acherusgrotesque-regular-webfont.woff2') format('woff2'),
+         url('../polices/acherusgrotesque-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'maven';
+    src: url('../polices/mavenpro-regular-webfont.woff2') format('woff2'),
+		url('../polices/mavenpro-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+body {
+	font-family:'acherusgrotesque-regular';
+	font-size: 19;
+	background-color: black;
+	padding-top: 9px;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link:focus {
+	color: #FFD700;
+}
+
+
+#boutonCreer{
+
+	display: block;
+	text-align: center;
+
+
+}
+
+.textsch img{
+	width: 300px;
+}
+
+
+
+
+
+#accueil {
+	background-color: #FCD21C;
+}
+
+#accueil div {
+	text-align: center;
+}
+
+#fleches img {
+	margin-top: 3%;
+	height: 120px;
+	width: 170px;
+}
+
+
+
+#caracteristiques {
+	background-color: #ddd9d9;
+	text-align: center;
+}
+
+#explications{
+	background-color: #303030;
+	height: 550px;
+	text-align: center;
+}
+
+
+
+a {
+	font:black;
+	text-decoration:none;
+	text-align:center;
+
+}
+
+#presentation{
+	height: 370px;
+	padding-top: 2%;
+	text-decoration: bold;
+}
+
+#logo img{
+	height:40px;
+	width: 40px;
+}
+
+#explications img {
+	height:500px;
+
+}
+	
+	
+
+footer {
+	color: #FFD700;
+	font-size:small;
+	text-align:center;
+}
+
+
+footer p {
+	display:inline-block;
+	padding-left: 5%;
+	padding-right: 5%;
+	padding-top: 1%;
+}
+
+
+
