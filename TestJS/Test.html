@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    var div;
+    var para;
+    var text;
+    var string;
+    window.addEventListener('keydown', (event) => {
+        switch(event.key) {
+            case 's' : para = document.createElement("p");
+                div = document.getElementById("div1");
+                text = document.createTextNode("J'ai appuyé sur la touche S");
+                para.appendChild(text);
+                div.appendChild(para);
+                break;
+            case 'ArrowUp' : div = document.getElementById("div1");
+                para = div.lastChild;
+                para.setAttribute('style','color = "green"');
+                break;
+            case 'ArrowDown' : div = document.getElementById("div1");
+                para = div.lastChild;
+                para.setAttribute('style','color = "red"');
+                break;
+            case 'ArrowLeft' : div = document.getElementById("div1");
+                para = div.lastChild;
+                para.style.color('blue');
+                break;
+            case 'ArrowRight' : div = document.getElementById("div1");
+                para = div.lastElementChild;
+                let attribut = div.createAttribute('style');
+                attribut.value=('color = "green"');
+                para.setAttributeNode(attribut);
+                break;
+            default : para = document.createElement("p");
+                string = "le default du case : ";
+                string = string.concat(event.key);
+                text = document.createTextNode(string);
+                div = document.getElementById("div1");
+                para.appendChild(text);
+                div.appendChild(para);
+        }/*
+        if (event.key === 'f') {
+            para = document.createElement("p");
+            text = document.createTextNode("J'ai appuyé sur la touche F");
+            para.appendChild(text);
+
+            div = document.getElementById("div1");
+            div.appendChild(para);
+            para = div.lastChild;
+            para.setAttribute('style','color = "blue"');
+        }
+        else {
+            let para = document.createElement("p");
+            let string = "J'ai appuyé sur ";
+            string = string.concat(event.key);
+            let text = document.createTextNode(string);
+            para.appendChild(text);
+
+            let div = document.getElementById("div1");
+            div.appendChild(para);
+        }*/
+    })
+</script>
+
+<div id="div1">
+<p style="color: aquamarine">Ceci est un premier texte</p>
+</div>
+
+</body>
+</html>
