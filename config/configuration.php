@@ -7,5 +7,6 @@ $chemin=__DIR__.'/../';
 
 $lesVues['accueil']='vues/accueil.php';
 $lesVues['erreur']='vues/erreur.php';
-
+$lesVues['form']='vues/formulaire.php';
+$lesVues['panorama']='vues/panoramaUtilisateur.php'
 ?>
