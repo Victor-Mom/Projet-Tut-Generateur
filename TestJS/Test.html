@@ -21,55 +21,33 @@
                 break;
             case 'ArrowUp' : div = document.getElementById("div1");
                 para = div.lastChild;
-                para.setAttribute('style','color = "green"');
+                para.setAttribute('style','color : lightgreen');
                 break;
             case 'ArrowDown' : div = document.getElementById("div1");
                 para = div.lastChild;
-                para.setAttribute('style','color = "red"');
+                para.setAttribute('style','color : red');
                 break;
             case 'ArrowLeft' : div = document.getElementById("div1");
                 para = div.lastChild;
-                para.style.color('blue');
+                para.setAttribute('style','color : orange');
                 break;
             case 'ArrowRight' : div = document.getElementById("div1");
                 para = div.lastElementChild;
-                let attribut = div.createAttribute('style');
-                attribut.value=('color = "green"');
-                para.setAttributeNode(attribut);
+                para.setAttribute('style','color : blue');
                 break;
             default : para = document.createElement("p");
-                string = "le default du case : ";
+                string = "le default du switch : ";
                 string = string.concat(event.key);
                 text = document.createTextNode(string);
                 div = document.getElementById("div1");
                 para.appendChild(text);
                 div.appendChild(para);
-        }/*
-        if (event.key === 'f') {
-            para = document.createElement("p");
-            text = document.createTextNode("J'ai appuyé sur la touche F");
-            para.appendChild(text);
-
-            div = document.getElementById("div1");
-            div.appendChild(para);
-            para = div.lastChild;
-            para.setAttribute('style','color = "blue"');
         }
-        else {
-            let para = document.createElement("p");
-            let string = "J'ai appuyé sur ";
-            string = string.concat(event.key);
-            let text = document.createTextNode(string);
-            para.appendChild(text);
-
-            let div = document.getElementById("div1");
-            div.appendChild(para);
-        }*/
     })
 </script>
 
 <div id="div1">
-<p style="color: aquamarine">Ceci est un premier texte</p>
+<p>Ceci est un premier texte</p>
 </div>
 
 </body>
