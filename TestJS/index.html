@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Test mais avec panorama</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-slice9-component/dist/aframe-slice9-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.5.1/dist/aframe-look-at-component.min.js"></script>
 </head>
 <body>
-
 <script>
     var div;
     var para;
@@ -14,7 +16,7 @@
     window.addEventListener('keydown', (event) => {
         switch(event.key) {
             case 's' : document.getElementById('id01').style.display='inline-block'
-                break;
+                break;/*
             case 'ArrowUp' : div = document.getElementById("div1");
                 para = div.lastChild;
                 para.setAttribute('style','color : lightgreen');
@@ -30,7 +32,7 @@
             case 'ArrowRight' : div = document.getElementById("div1");
                 para = div.lastElementChild;
                 para.setAttribute('style','color : blue');
-                break;
+                break;*/
             default :
                 break;
         }
@@ -57,9 +59,16 @@
     </div>
 </div>
 
-<div id="div1">
-<p style="color: blueviolet">Ceci est un premier texte</p>
-</div>
+<a-sky id="skybox" src="exterieurMilieu.jpg"></a-sky>
+
+<a-entity id="cam" camera="active:false" position="0 1.6 0" look-controls>
+    <a-entity cursor="fuse:true;fuseTimeout:2000"
+              geometry="primitive:ring;radiusInner:0.01;radiusOuter:0.02"
+              position="0 0 -1.8"
+              material="shader:flat;color:blue">
+    </a-entity>
+</a-entity>
+
 
 </body>
 </html>
