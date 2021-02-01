@@ -66,7 +66,8 @@ class ControleVisiteur
             $this->tableauErreur='nom de projet invalide/vide';
         }
 
-        $maxFileSize = 1000000;
+        $cpt = 0;
+        $maxFileSize = 20000000;
         $fileExt = array('.jpg', '.png', '.jpeg');
         $total_fichier_upload = count($_FILES['photos']['tmp_name']);
 
@@ -84,12 +85,18 @@ class ControleVisiteur
                 require($chemin . $lesVues['form']);
                 break;
             } else {
+                if(!file_exists ( "photosUpload" )){
+                    mkdir("photosUpload");
+                }
                 $fileName = "photosUpload/" . $fileName;
                 $reussi = move_uploaded_file($_FILES['photos']['tmp_name'][$i], $fileName);
                 if ($reussi) {
-                    require($chemin . $lesVues['panorama']);
+                    $cpt = $cpt +1;
                 }
             }
+        }
+        if($cpt == $total_fichier_upload){
+            require($chemin . $lesVues['panorama']);
         }
     }
 }
