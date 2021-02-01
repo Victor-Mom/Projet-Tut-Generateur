@@ -47,13 +47,13 @@
             <br/>
 
             <div class="text-center text-white">
-                <h4 class="text-center ">Veuillez saisir vos images: (.png / .jpg)</h4>
+                <h4 class="text-center">Veuillez saisir vos images: (.png / .jpg)</h4>
                 <input class="btn btn-warning" type="file" placeholder="Mon Panorama" name="photos[]" multiple required>
                 <br/>
                 <?php
-                if (isset($taberr)) {
-                    if (!empty($taberr)) {
-                        echo "<p >$taberr</p>";
+                if (isset($this->tableauErreur)) {
+                    if (!empty($this->tableauErreur)) {
+                        echo "<p>$this->tableauErreur</p>";
                     }
                 }
                 ?>
@@ -63,7 +63,7 @@
             <br/>
             <div class="text-center">
                 <div class="button-login">
-                    <input class="btn btn-warning" type="submit" name="action" value="Valider" >
+                    <input class="btn btn-warning" type="submit" name="action" value="valider">
                 </div>
             </div>
 

@@ -3,6 +3,8 @@
 
 class ControleVisiteur
 {
+    public $tableauErreur = array();
+
     function __construct()
     {
         global $chemin, $lesVues;
@@ -17,37 +19,11 @@ class ControleVisiteur
                     break;
 
                 case "formulaireAjoutPhotos":
-                    require($chemin.$lesVues['form']);
+                    $this->formulaireAjout();
                     break;
 
-                case "Valider" :
-                    $maxFileSize = 500000;
-                    $fileExt = array('.jpg','.png','.jpeg');
-                    $total_fichier_uploade = count($_FILES['photos']['tmp_name']);
-
-                    for ($i=0; $i < $total_fichier_uploade ; $i++) {
-                        $fileName = $_FILES['photos']['name'][$i];
-                        $extFichierSubmit = "." . strtolower(substr(strrchr($fileName, "."), 1));
-
-                        if (!in_array($extFichierSubmit, $fileExt)) {
-                            $taberr = $fileName." : n'est pas une image au format .png, .jpg ou .jpeg";
-                            require($chemin . $lesVues['form']);
-                            break;
-                        }
-                        if ($maxFileSize < $_FILES['photos']['size'][$i]) {
-                            $taberr = $fileName." : Fichier trop volumineux";
-                            require($chemin . $lesVues['form']);
-                            break;
-                        }
-                        else {
-                            $fileName = "photosUpload/" . $fileName;
-                            $reussi = move_uploaded_file($_FILES['photos']['tmp_name'][$i], $fileName);
-                            if ($reussi) {
-                                require($chemin . $lesVues['panorama']);
-                            }
-                            //$this->ajoutPhotos();
-                        }
-                    }
+                case "valider" :
+                    $this->validerFormulaire();
                     break;
 
                 default:
@@ -63,22 +39,57 @@ class ControleVisiteur
         exit(0);
     }
 
-    public function accueil() {
+    public function accueil()
+    {
         global $chemin, $lesVues;
 
 
         if (!empty($this->tableauErreur)) {
             require($chemin . $lesVues['erreur']);
-        }
-        else {
+        } else {
             require($chemin . $lesVues['accueil']);
         }
     }
 
-    public function ajoutPhotos() {
-        $m = new ModeleDonnees();
-        //On récupère les photos via le formulaire
-        //On les valide
-        $m->ajoutPhotos();
+    public function formulaireAjout() {
+        global $chemin, $lesVues;
+
+        require($chemin . $lesVues['form']);
+    }
+
+    public function validerFormulaire()
+    {
+        global $chemin, $lesVues;
+
+        $nomProjet=Validation::val_texte($_POST['nomProjet']);
+        if (!isset($nomProjet)) {
+            $this->tableauErreur='nom de projet invalide/vide';
+        }
+
+        $maxFileSize = 1000000;
+        $fileExt = array('.jpg', '.png', '.jpeg');
+        $total_fichier_upload = count($_FILES['photos']['tmp_name']);
+
+        for ($i = 0; $i < $total_fichier_upload; $i++) {
+            $fileName = $_FILES['photos']['name'][$i];
+            $extFichierSubmit = "." . strtolower(substr(strrchr($fileName, "."), 1));
+
+            if (!in_array($extFichierSubmit, $fileExt)) {
+                $this->tableauErreur = $fileName . " : n'est pas une image au format .png, .jpg ou .jpeg";
+                require($chemin . $lesVues['form']);
+                break;
+            }
+            if ($maxFileSize < $_FILES['photos']['size'][$i]) {
+                $this->tableauErreur= $fileName . " : Fichier trop volumineux";
+                require($chemin . $lesVues['form']);
+                break;
+            } else {
+                $fileName = "photosUpload/" . $fileName;
+                $reussi = move_uploaded_file($_FILES['photos']['tmp_name'][$i], $fileName);
+                if ($reussi) {
+                    require($chemin . $lesVues['panorama']);
+                }
+            }
+        }
     }
 }
