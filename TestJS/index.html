@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Test mais avec panorama</title>
+    <title>Index</title>
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-slice9-component/dist/aframe-slice9-component.min.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@0.5.1/dist/aframe-look-at-component.min.js"></script>
@@ -15,8 +15,18 @@
     var string;
     window.addEventListener('keydown', (event) => {
         switch(event.key) {
-            case 's' : document.getElementById('id01').style.display='inline-block'
-                break;/*
+            case 's' :
+                //document.getElementById('id01').style.display='inline-block'
+                window.open("Test.html",'name',"menubar=no, status=no, scrollbars=no, menubar=no, width=200, height=100");
+                break;
+            /*
+            case 'p' :
+                para = document.createElement("a-entity");
+                text = document.createElement("a-plane");
+                para.appendChild(text);
+                div = document.getElementById("skybox");
+                div.appendChild(para);
+                break;
             case 'ArrowUp' : div = document.getElementById("div1");
                 para = div.lastChild;
                 para.setAttribute('style','color : lightgreen');
@@ -58,17 +68,18 @@
         </div>
     </div>
 </div>
+<a-scene id="notreScene">
+    <a-sky id="skybox" src="exterieurMilieu.jpg"></a-sky>
 
-<a-sky id="skybox" src="exterieurMilieu.jpg"></a-sky>
-
-<a-entity id="cam" camera="active:false" position="0 1.6 0" look-controls>
-    <a-entity cursor="fuse:true;fuseTimeout:2000"
-              geometry="primitive:ring;radiusInner:0.01;radiusOuter:0.02"
-              position="0 0 -1.8"
-              material="shader:flat;color:blue">
+    <a-entity id="cam" camera position="0 1.6 0" look-controls wasd-controls="enabled:false">
+        <a-entity cursor="fuse:true;fuseTimeout:2000"
+                  geometry="primitive:ring;radiusInner:0.01;radiusOuter:0.02"
+                  position="0 0 -1.8"
+                  material="shader:flat;color:blue">
+        </a-entity>
     </a-entity>
-</a-entity>
 
+</a-scene>
 
 </body>
 </html>
