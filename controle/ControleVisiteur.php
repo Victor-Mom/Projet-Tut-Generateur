@@ -4,6 +4,8 @@
 class ControleVisiteur
 {
     public $tableauErreur = array();
+    public $listPhotos = array();
+    private $panorama;
 
     function __construct()
     {
