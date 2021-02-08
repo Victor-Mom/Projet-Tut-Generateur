@@ -13,20 +13,42 @@
     var para;
     var text;
     var string;
+    var monCarre;
+    var coord;
     window.addEventListener('keydown', (event) => {
         switch(event.key) {
             case 's' :
                 //document.getElementById('id01').style.display='inline-block'
                 window.open("Test.html",'name',"menubar=no, status=no, scrollbars=no, menubar=no, width=200, height=100");
                 break;
-            /*
-            case 'p' :
-                para = document.createElement("a-entity");
-                text = document.createElement("a-plane");
-                para.appendChild(text);
-                div = document.getElementById("skybox");
-                div.appendChild(para);
+            case 'r' :
+                monCarre = document.getElementById("monCarre");
+                monCarre.setAttribute('color', "blue");
                 break;
+            case 'p' :
+                monCarre = document.createElement("a-plane");
+                monCarre.setAttribute('color',"green");
+                coord = {x: -2, y: 4, z: -7};
+                monCarre.setAttribute("position",coord);
+                div = document.getElementById("notreScene");
+                div.appendChild(monCarre);
+                break;
+            case 'l' :
+                var form = ("Veuillez rentrer le texte de votre panneau : ");
+                var inputPos = document.createElement("input");
+                inputPos.setAttribute("type", "text");
+                window.prompt(form);
+                if (document.querySelector("input") != null) {
+                    console.log(document.querySelector("input").value);
+                }
+
+            case 'ArrowLeft' : div = document.getElementById("notreScene");
+                monCarre = div.lastChild;
+                coord = monCarre.getAttribute("position");
+                coord["x"] += 0.5;
+                monCarre.setAttribute("position",coord);
+                break;
+            /*
             case 'ArrowUp' : div = document.getElementById("div1");
                 para = div.lastChild;
                 para.setAttribute('style','color : lightgreen');
@@ -34,10 +56,6 @@
             case 'ArrowDown' : div = document.getElementById("div1");
                 para = div.lastChild;
                 para.setAttribute('style','color : red');
-                break;
-            case 'ArrowLeft' : div = document.getElementById("div1");
-                para = div.lastChild;
-                para.setAttribute('style','color : orange');
                 break;
             case 'ArrowRight' : div = document.getElementById("div1");
                 para = div.lastElementChild;
@@ -49,25 +67,6 @@
     })
 </script>
 
-<div id="id01" class="w3-modal" style="display : none;">
-    <div class="w3-modal-content">
-        <div class="w3-container">
-            <form method="post" name="formAjoutTache" id="formAjoutTache">
-                <div class="input-group input-group-lg">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-lg">Texte du panneau à ajouter :</span>
-                    </div>
-                    <input type="text" name="intitule" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
-                    <input type="hidden" name="action" value="ADD_TACHE">
-                </div>
-                <br>
-                <input id="retourTache" type="button" class="btn btn-dark" value="Annuler" onclick="document.getElementById('id01').style.display='none'"/>
-                <input id="valider" type="submit" class="btn btn-dark" value="Valider"/>
-                <br>
-            </form>
-        </div>
-    </div>
-</div>
 <a-scene id="notreScene">
     <a-sky id="skybox" src="exterieurMilieu.jpg"></a-sky>
 
@@ -78,6 +77,9 @@
                   material="shader:flat;color:blue">
         </a-entity>
     </a-entity>
+
+    <a-box id="monCarre" height="10" color="red" position="-1.5 3 -9">
+    </a-box>
 
 </a-scene>
 
