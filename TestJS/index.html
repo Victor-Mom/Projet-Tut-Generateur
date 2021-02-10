@@ -13,34 +13,38 @@
     var para;
     var text;
     var string;
-    var monCarre;
+    var monPanneau;
     var coord;
     window.addEventListener('keydown', (event) => {
         switch(event.key) {
-            case 's' :
-                //document.getElementById('id01').style.display='inline-block'
-                window.open("Test.html",'name',"menubar=no, status=no, scrollbars=no, menubar=no, width=200, height=100");
-                break;
-            case 'r' :
-                monCarre = document.getElementById("monCarre");
-                monCarre.setAttribute('color', "blue");
-                break;
             case 'p' :
-                monCarre = document.createElement("a-plane");
-                monCarre.setAttribute('color',"green");
-                coord = {x: -2, y: 4, z: -7};
-                monCarre.setAttribute("position",coord);
+                text = window.prompt("Veuillez rentrer le texte de votre panneau : ");
+                console.log(text);
+                monPanneau = document.createElement("a-entity");
+                monPanneau.setAttribute('color',"green");
+                coord= {x: -2, y: 4, z:-10};
+                monPanneau.setAttribute("position",coord);
+                monPanneau.setAttribute("slice9","width: 5; height: 1; left: 20; right: 43; top: 20; bottom: 43;src: tooltip.png");
+                monPanneau.setAttribute("look-at","#cam");
+                let value = "value:";
+                value = value.concat(text).concat(";wrap-count:15; width:5; align:center;zOffset:0.05");
+                monPanneau.setAttribute("text",value);
                 div = document.getElementById("notreScene");
-                div.appendChild(monCarre);
+                div.appendChild(monPanneau);
                 break;
             case 'l' :
-                var form = ("Veuillez rentrer le texte de votre panneau : ");
-                var inputPos = document.createElement("input");
-                inputPos.setAttribute("type", "text");
-                window.prompt(form);
-                if (document.querySelector("input") != null) {
-                    console.log(document.querySelector("input").value);
-                }
+                //var form = ("Veuillez rentrer le texte de votre panneau : ");
+                //var inputPos = document.createElement("input");
+                //inputPos.setAttribute("type", "text");
+                var target = window.prompt("Veuillez rentrer le texte de votre panneau : ");
+                console.log(target);
+                /*
+                var target = window.prompt("Veuillez rentrer le texte de votre panneau : ");
+                var currentPlace = $(".imsky");
+                var pann = document.createElement("a-entity");
+                pann.setAttribute("data-text",target);
+                currentPlace.appendChild(pann);*/
+                break;
 
             case 'ArrowLeft' : div = document.getElementById("notreScene");
                 monCarre = div.lastChild;
@@ -77,9 +81,6 @@
                   material="shader:flat;color:blue">
         </a-entity>
     </a-entity>
-
-    <a-box id="monCarre" height="10" color="red" position="-1.5 3 -9">
-    </a-box>
 
 </a-scene>
 
