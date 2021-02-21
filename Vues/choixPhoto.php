@@ -53,17 +53,19 @@
             <br/>
             <br/>
             <br/>
-            <div class="text-center">
+            <div class="text-center" >
                 <h4 class="text-center text-white">Veuillez choisir l'image de départ de votre panorama:</h4>
-                <select name="photo1">
-                    <?php
-                    foreach ($panorama->getListPhotos() as $photo){
-                        ?>
-                        <option value="<?php echo $photo?>"><?php echo $photo?></option>
+                <label>
+                    <select name="photo1">
                         <?php
-                    }
-                    ?>
-                </select>
+                        foreach ($panorama->getListPhotos() as $photo){
+                            ?>
+                            <option value="<?php echo $photo?>"><?php echo $photo?></option>
+                            <?php
+                        }
+                        ?>
+                    </select>
+                </label>
             </div>
 
             <br/>
@@ -74,7 +76,7 @@
             <br/>
             <div class="text-center">
                 <div class="button-login">
-                    <input class="btn btn-warning " type="submit" name="action" value="valider">
+                    <input class="btn btn-warning " type="submit" name="action" value="COMMENCER">
                 </div>
             </div>
 

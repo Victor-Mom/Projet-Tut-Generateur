@@ -28,6 +28,10 @@ class ControleVisiteur
                     $this->validerFormulaire();
                     break;
 
+                case "COMMENCER" :
+                    require($chemin.$lesVues['debutpano']);
+                break;
+
                 default:
                     $this->tableauErreur[] = "Mauvais appel php";
                     require($chemin . $lesVues['erreur']);
