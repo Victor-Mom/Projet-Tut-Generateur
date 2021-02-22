@@ -64,7 +64,7 @@
         </a-assets>
 
 
-        <a-sky id="skybox" src="#photo1>"></a-sky>
+        <a-sky id="skybox" src="#photo1"></a-sky>
 
         <a-entity id="cam" camera position="0 1.6 0" look-controls>
             <a-entity cursor="fuse:true;fuseTimeout:2000"

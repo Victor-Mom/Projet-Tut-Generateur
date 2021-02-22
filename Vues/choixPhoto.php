@@ -11,7 +11,7 @@
 
         }
     }
-    closedir("photosUpload");
+    closedir($dir);
 
 ?>
 <!doctype html>
