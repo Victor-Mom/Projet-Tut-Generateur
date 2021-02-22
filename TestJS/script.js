@@ -9,11 +9,9 @@ window.addEventListener('keydown', (event) => {
         case 'p' :
             text = window.prompt("Veuillez rentrer le texte de votre panneau : ");
             text = text.trim();
-            if (text != null && text.match(/\s+/) === null) {
+            if (text != null) {
                 monPanneau = document.createElement("a-entity");
                 coord = {x: -2, y: 4, z: -10};
-                //coord = document.getElementById("cam").getAttribute("rotation");
-                //console.log(coord);
                 monPanneau.setAttribute("position", coord);
                 monPanneau.setAttribute("slice9", "width: 5; height: 1; left: 20; right: 43; top: 20; bottom: 43;src: tooltip.png");
                 monPanneau.setAttribute("look-at", "#cam");
@@ -24,18 +22,18 @@ window.addEventListener('keydown', (event) => {
             }
             break;
         case 'n' :
+            text = window.prompt("Veuillez rentrer le nom de l'image de destination : ");
             monPanneau = document.createElement("a-image");
             coord= {x: -2, y: 4, z:-10};
-            //coord = document.getElementById("cam").getAttribute("rotation");
-            //console.log(coord);
             monPanneau.setAttribute("position",coord);
-            //monPanneau.setAttribute("link","...");
+            let chemin = "photosUpload/" + text;
+            monPanneau.setAttribute("link",chemin);
             monPanneau.setAttribute("src","fleche.png");
             monPanneau.setAttribute("look-at","#cam");
             div = document.getElementById("notreScene");
             div.appendChild(monPanneau);
             break;
-        case 's' :
+        case 'a' :
             cle = (cle + 1) % 3;
             break;
         case 'ArrowLeft' : div = document.getElementById("notreScene");
@@ -63,6 +61,9 @@ window.addEventListener('keydown', (event) => {
                     break;
             }
             monPanneau.setAttribute("position",coord);
+            break;
+        case 's' :
+            //SAUVEGARDE
             break;
         default :
             break;
