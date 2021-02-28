@@ -4,8 +4,7 @@
 class ControleVisiteur
 {
     public $tableauErreur = array();
-    public $listPhotos = array();
-    private $panorama;
+    public $panorama;
 
     function __construct()
     {
@@ -30,6 +29,10 @@ class ControleVisiteur
 
                 case "COMMENCER" :
                     require($chemin.$lesVues['debutpano']);
+                break;
+
+                case "formTab" :
+                    require($chemin.$lesVues['accueil']);
                 break;
 
                 default:
@@ -102,6 +105,19 @@ class ControleVisiteur
             }
         }
         if($cpt == $total_fichier_upload){
+            $dir_nom = __DIR__."/../photosUpload";
+            $dir =  opendir($dir_nom) or die('Erreur de listage : le répertoire n\'existe pas');
+
+            $panorama = new Panorama($_POST['nomProjet']);
+
+            while($element = readdir($dir)) {
+                if($element != '.' && $element != '..') {
+                    $photo = $element;
+                    $panorama->addPhotos($photo);
+
+                }
+            }
+            closedir($dir);
             require($chemin . $lesVues['panorama']);
         }
     }

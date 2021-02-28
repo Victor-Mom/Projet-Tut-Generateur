@@ -10,6 +10,7 @@
     <script src="https://unpkg.com/aframe-animation-component@^4.1.2/dist/aframe-animation-component.min.js"></script>
 
     <script src="https://unpkg.com/aframe-look-at-component@0.5.1/dist/aframe-look-at-component.min.js"></script>
+    <script src="Vues/js/script.js"></script>
     <script>
         AFRAME.registerComponent('hotspots',{
             init:function(){
@@ -58,7 +59,8 @@
     </script>
 </head>
 <body>
-    <a-scene>
+    <form method="post" id="notreFormulaire"></form>
+    <a-scene id="notreScene">
         <a-assets>
             <img id="photo1" src="photosUpload/<?php echo $_POST['photo1']; ?>" alt=""/>
         </a-assets>

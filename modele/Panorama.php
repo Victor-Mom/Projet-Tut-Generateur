@@ -3,8 +3,6 @@
 class Panorama
 {
     private $listPhotos = [];
-    private $panneau = [];
-    private $pointNav = [];
     private $nom;
     private static $_instance = null;
 
@@ -21,6 +19,11 @@ class Panorama
         $this->nom = $nom;
     }
 
+    public function addPhotos($photos){
+        $photo = new Photos($photos);
+        array_push($this->listPhotos, $photo);
+    }
+
     public static function getInstance($nomPano) {
         if(is_null(self::$_instance)) {
             self::$_instance = new Panorama($nomPano);
@@ -28,17 +31,7 @@ class Panorama
         return self::$_instance;
     }
 
-    public function addPanneau($panneau){
-        array_push($this->panneau, $panneau);
-    }
 
-    public function addPointNav($pointNav){
-        array_push($this->pointNav, $pointNav);
-    }
-
-    public function addPhotos($photos){
-        array_push($this->listPhotos, $photos);
-    }
 
     /**
      * @return mixed
