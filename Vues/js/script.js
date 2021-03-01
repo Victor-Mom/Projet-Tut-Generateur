@@ -31,7 +31,7 @@ window.addEventListener('keydown', (event) => {
             coord= {x: -2, y: 4, z:-10};
             monPanneau.setAttribute("position",coord);
             let chemin = "photosUpload/" + text;
-            monPanneau.setAttribute("link",chemin);
+            monPanneau.setAttribute("link","href:"+chemin);
             monPanneau.setAttribute("class", "point");
             monPanneau.setAttribute("src","Vues/photos/fleche.png");
             monPanneau.setAttribute("look-at","#cam");
@@ -74,8 +74,13 @@ window.addEventListener('keydown', (event) => {
             let points = Array.from(document.getElementsByClassName("point"));
             lesElements = panneaux.concat(points);
             lesElements.forEach(element => sauvegarde(element));
-            form.setAttribute("name","action");
-            form.setAttribute("value","formTab");
+
+            input = document.createElement("input");
+            input.setAttribute("type","submit");
+            input.setAttribute("name","action");
+            input.setAttribute("value","SAVE");
+            form.appendChild(input);
+
             form.submit();
             break;
         default :

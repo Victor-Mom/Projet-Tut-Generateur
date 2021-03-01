@@ -2,6 +2,7 @@
 
 $chemin=__DIR__.'/../';
 
+$nomProj="";
 
 //Vues
 

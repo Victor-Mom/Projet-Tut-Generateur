@@ -4,7 +4,7 @@
 class ControleVisiteur
 {
     public $tableauErreur = array();
-    public $panorama;
+
 
     function __construct()
     {
@@ -28,10 +28,11 @@ class ControleVisiteur
                     break;
 
                 case "COMMENCER" :
-                    require($chemin.$lesVues['debutpano']);
+                    $this->debutPano();
                 break;
 
-                case "formTab" :
+                case "SAVE" :
+                    echo "bijour";
                     require($chemin.$lesVues['accueil']);
                 break;
 
@@ -62,15 +63,16 @@ class ControleVisiteur
 
     public function formulaireAjout() {
         global $chemin, $lesVues;
-
         require($chemin . $lesVues['form']);
     }
 
     public function validerFormulaire()
     {
-        global $chemin, $lesVues;
+        global $chemin, $lesVues, $nomProj;
 
         $nomProjet=Validation::val_texte($_POST['nomProjet']);
+        $nomProj=$nomProjet;
+        echo $nomProjet;
         if (!isset($nomProjet)) {
             $this->tableauErreur='nom de projet invalide/vide';
         }
@@ -108,7 +110,7 @@ class ControleVisiteur
             $dir_nom = __DIR__."/../photosUpload";
             $dir =  opendir($dir_nom) or die('Erreur de listage : le répertoire n\'existe pas');
 
-            $panorama = new Panorama($_POST['nomProjet']);
+            $panorama = Panorama::getInstance($nomProj);
 
             while($element = readdir($dir)) {
                 if($element != '.' && $element != '..') {
@@ -120,5 +122,15 @@ class ControleVisiteur
             closedir($dir);
             require($chemin . $lesVues['panorama']);
         }
+    }
+
+    public function debutPano()
+    {
+        global $chemin, $lesVues, $nomProj;
+        echo "dd";
+        $panorama = Panorama::getInstance($nomProj);
+        var_dump(Panorama::getInstance($nomProj));
+        $panorama->setPhotoencours($panorama->find(filter_var($_POST['photo1'],FILTER_SANITIZE_STRING)));
+        require($chemin.$lesVues['debutpano']);
     }
 }

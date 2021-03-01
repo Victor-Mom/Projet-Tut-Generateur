@@ -5,6 +5,18 @@ class Photos{
     public string $photos;
     public $panneau = [];
     public $pointNav = [];
+    public bool $isDone;
+
+
+    public function isDone(): bool
+    {
+        return $this->isDone;
+    }
+
+    public function setIsDone(bool $isDone): void
+    {
+        $this->isDone = $isDone;
+    }
 
     public function __construct($photos)
     {
