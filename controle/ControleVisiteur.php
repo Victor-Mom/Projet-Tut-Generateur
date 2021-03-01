@@ -11,7 +11,6 @@ class ControleVisiteur
     function __construct()
     {
         global $chemin, $lesVues;
-        $this->formulaireAjoutPhotoCarte();
         $action = $_REQUEST['action'];
 
         try {
