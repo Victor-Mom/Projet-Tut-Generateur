@@ -28,6 +28,14 @@ class ControleVisiteur
                     $this->validerFormulaire();
                     break;
 
+                case "formulaireAjoutPhotoCarte":
+                    $this->formulaireAjoutPhotoCarte();
+                    break;
+
+                case "Valider ce choix" :
+                    $this->validerFormulaireCarte();
+                    break;
+
                 case "COMMENCER" :
                     require($chemin.$lesVues['debutpano']);
                 break;
@@ -103,6 +111,46 @@ class ControleVisiteur
         }
         if($cpt == $total_fichier_upload){
             require($chemin . $lesVues['panorama']);
+        }
+    }
+
+    public function formulaireAjoutPhotoCarte() {
+        global $chemin, $lesVues;
+
+        require($chemin . $lesVues['formCarte']);
+    }
+
+    public function validerFormulaireCarte()
+    {
+        global $chemin, $lesVues;
+
+
+        $maxFileSize = 20000000;
+        $fileExt = array('.jpg', '.png', '.jpeg');
+
+        $fileName = $_FILES['photoCarte']['name'];
+        $extFichierSubmit = "." . strtolower(substr(strrchr($fileName, "."), 1));
+
+        if (!in_array($extFichierSubmit, $fileExt)) {
+            $this->tableauErreur = $fileName . " : n'est pas une image au format .png, .jpg ou .jpeg";
+                require($chemin . $lesVues['formCarte']);
+        }
+
+
+        if ($maxFileSize < $_FILES['photoCarte']['size']) {
+            $this->tableauErreur= $fileName . " : Fichier trop volumineux";
+            require($chemin . $lesVues['formCarte']);
+
+        } else {
+            if(!file_exists ( "photosUpload" )){
+                mkdir("photosUpload");
+            }
+            $fileName = "photosUpload/" . $fileName;
+            $reussi = move_uploaded_file($_FILES['photoCarte']['tmp_name'], $fileName);
+        }
+
+        if($reussi){
+            require($chemin . $lesVues['carte']);
         }
     }
 }
