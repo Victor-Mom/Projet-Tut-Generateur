@@ -68,10 +68,9 @@ class ControleVisiteur
 
     public function validerFormulaire()
     {
-        global $chemin, $lesVues, $nomProj;
+        global $chemin, $lesVues;
 
         $nomProjet=Validation::val_texte($_POST['nomProjet']);
-        $nomProj=$nomProjet;
         echo $nomProjet;
         if (!isset($nomProjet)) {
             $this->tableauErreur='nom de projet invalide/vide';
@@ -110,7 +109,7 @@ class ControleVisiteur
             $dir_nom = __DIR__."/../photosUpload";
             $dir =  opendir($dir_nom) or die('Erreur de listage : le répertoire n\'existe pas');
 
-            $panorama = Panorama::getInstance($nomProj);
+            $panorama = Panorama::getInstance($nomProjet);
 
             while($element = readdir($dir)) {
                 if($element != '.' && $element != '..') {
@@ -126,11 +125,14 @@ class ControleVisiteur
 
     public function debutPano()
     {
-        global $chemin, $lesVues, $nomProj;
-        echo "dd";
-        $panorama = Panorama::getInstance($nomProj);
-        var_dump(Panorama::getInstance($nomProj));
-        $panorama->setPhotoencours($panorama->find(filter_var($_POST['photo1'],FILTER_SANITIZE_STRING)));
+        global $chemin, $lesVues;
+        $panorama = Panorama::getInstance("");
+        echo 'nom projet :';
+        var_dump($panorama);
+        $photoEnCours = $panorama->find(filter_var($_POST['photo1'],FILTER_SANITIZE_STRING));
+        if ($photoEnCours != null) {
+            $panorama->setPhotoencours($photoEnCours);
+        }
         require($chemin.$lesVues['debutpano']);
     }
 }

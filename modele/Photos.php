@@ -2,10 +2,10 @@
 
 class Photos{
 
-    public string $photos;
+    public $photos = "";
     public $panneau = [];
     public $pointNav = [];
-    public bool $isDone;
+    public $isDone = false;
 
 
     public function isDone(): bool

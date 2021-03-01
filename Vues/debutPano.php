@@ -1,7 +1,3 @@
-<?php
-    var_dump($panorama);
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

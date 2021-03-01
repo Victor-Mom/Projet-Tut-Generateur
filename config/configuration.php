@@ -2,8 +2,6 @@
 
 $chemin=__DIR__.'/../';
 
-$nomProj="";
-
 //Vues
 
 $lesVues['accueil']='vues/accueil.php';

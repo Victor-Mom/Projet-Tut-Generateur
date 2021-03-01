@@ -5,16 +5,15 @@ class Panorama
     private $listPhotos = [];
     private $nom;
     private static $_instance = null;
-    public Photos $photoencours;
+    public $photoencours = null;
 
     private function __construct($nom)
     {
         $this->nom = $nom;
     }
 
-
     public static function getInstance($nom) {
-        if(isset(self::$_instance)) {
+        if(self::$_instance == null) {
             self::$_instance = new Panorama($nom);
         }
         return self::$_instance;
@@ -25,7 +24,7 @@ class Panorama
         return $this->photoencours;
     }
 
-    public function setPhotoencours(Photos $photoencours): void
+    public function setPhotoencours(Photos $photoencours)
     {
         $this->photoencours = $photoencours;
     }
@@ -43,10 +42,11 @@ class Panorama
     }
 
 
-    public function find($nomPhoto){
+    public function find($nomPhoto) : ?Photos {
         foreach ($this->listPhotos as $photo){
             if($photo->getNom() == $nomPhoto) return $photo;
         }
+        return null;
     }
 
     /**
