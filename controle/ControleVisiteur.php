@@ -6,11 +6,11 @@ class ControleVisiteur
     public $tableauErreur = array();
     public $listPhotos = array();
     private $panorama;
+    public $fileName;
 
     function __construct()
     {
         global $chemin, $lesVues;
-
         $action = $_REQUEST['action'];
 
         try {
@@ -147,6 +147,7 @@ class ControleVisiteur
             }
             $fileName = "photosUpload/" . $fileName;
             $reussi = move_uploaded_file($_FILES['photoCarte']['tmp_name'], $fileName);
+            echo $fileName;
         }
 
         if($reussi){
