@@ -13,21 +13,24 @@ window.addEventListener('keydown', (event) => {
         case 'n' : //CREATION D'UN POINT DE NAVIGATION
             text = window.prompt("Veuillez rentrer le nom de l'image de destination (avec extension) : ");
             monPanneau = document.createElement("a-image");
-            coord= {x: -2, y: 4, z:-10};
+            coord= {x: -2, y: 1.6, z:-2};
             monPanneau.setAttribute("position",coord);
             let chemin = "photosUpload/" + text;
             monPanneau.setAttribute("link",chemin);
             monPanneau.setAttribute("class", "point");
-            monPanneau.setAttribute("src","logoJaune.png");
+            monPanneau.setAttribute("src","#logoJaune");
+            monPanneau.setAttribute("height","0.480");
+            monPanneau.setAttribute("width","0.300");
             monPanneau.setAttribute("look-at","#cam");
             div = document.getElementById("sceneCarte");
+            console.log(div);
             div.appendChild(monPanneau);
             break;
         case 'a' : //CHANGEMENT D'AXE
             cle = (cle + 1) % 3;
             break;
         case 'ArrowLeft' : //DEPLACEMENT SUR L'AXE CHOISI
-            div = document.getElementById("notreScene");
+            div = document.getElementById("sceneCarte");
             monPanneau = div.lastChild;
             coord = monPanneau.getAttribute("position");
             switch (cle) {
@@ -55,10 +58,8 @@ window.addEventListener('keydown', (event) => {
             monPanneau.setAttribute("position",coord);
             break;
         case 'j' : //SAUVEGARDE DES ELEMENTS CREES
-            let panneaux = Array.from(document.getElementsByClassName("panneau"));
-            let points = Array.from(document.getElementsByClassName("point"));
-            lesElements = panneaux.concat(points);
-            lesElements.forEach(element => sauvegarde(element));
+            let points = document.getElementsByClassName("point");
+            points.forEach(element => sauvegarde(element));
             form.submit();
             break;
         default :

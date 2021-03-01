@@ -8,14 +8,20 @@
     <script src="https://unpkg.com/aframe-look-at-component@0.5.1/dist/aframe-look-at-component.min.js"></script>
 </head>
 <body>
-<a-assets>
-    <img id="logoJaune" src="vues/photos/logoJaune.png" alt=""/>
-    <img id="fondBlanc" src="vues/photos/fondBlanc.png" alt=""/>
-</a-assets>
+
 
 <form id="formulaireCarteJS"></form>
 <a-scene id="sceneCarte">
     <a-sky id="skybox" src="#fondBlanc"></a-sky>
+
+    <a-assets>
+        <img id="logoJaune" src="vues/photos/logoJaune.png" alt=""/>
+        <img id="fondBlanc" src="vues/photos/fondBlanc.png" alt=""/>
+    </a-assets>
+
+    <a-assets>
+        <img id="photoCarte" src="<?php echo $fileName ?>" alt=""/>
+    </a-assets>
 
     <a-entity id="cam" camera position="0 1.6 0" look-controls wasd-controls="enabled:false">
         <a-entity cursor="fuse:true;fuseTimeout:2000"
@@ -24,6 +30,9 @@
                   material="shader:flat;color:blue">
         </a-entity>
     </a-entity>
+
+    <a-plane position="-1.89574 1.6 -1.96425" src="#photoCarte" look-at="#cam" height="4" width="6" material="" geometry="" rotation="0 43.98317825991033 0">
+    </a-plane>
 
 </a-scene>
 

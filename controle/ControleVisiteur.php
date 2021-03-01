@@ -11,6 +11,7 @@ class ControleVisiteur
     function __construct()
     {
         global $chemin, $lesVues;
+        $this->formulaireAjoutPhotoCarte();
         $action = $_REQUEST['action'];
 
         try {
@@ -147,7 +148,6 @@ class ControleVisiteur
             }
             $fileName = "photosUpload/" . $fileName;
             $reussi = move_uploaded_file($_FILES['photoCarte']['tmp_name'], $fileName);
-            echo $fileName;
         }
 
         if($reussi){

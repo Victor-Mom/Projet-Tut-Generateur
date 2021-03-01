@@ -42,7 +42,13 @@
                 <h4 class="text-center">Veuillez selectionner l'image de fond de la carte: (.png / .jpg)</h4>
                 <input class="btn btn-warning" type="file"  name="photoCarte" >
                 <br/>
-
+                <?php
+                if (isset($this->tableauErreur)) {
+                    if (!empty($this->tableauErreur)) {
+                        echo "<p>$this->tableauErreur</p>";
+                    }
+                }
+                ?>
             </div>
 
 
