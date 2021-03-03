@@ -109,13 +109,14 @@ class ControleVisiteur
             $dir_nom = __DIR__."/../photosUpload";
             $dir =  opendir($dir_nom) or die('Erreur de listage : le répertoire n\'existe pas');
 
-            $panorama = Panorama::getInstance($nomProjet);
-
-            while($element = readdir($dir)) {
+            Panorama::getInstance($nomProjet);
+            while(false !== ($element = readdir($dir))) {
                 if($element != '.' && $element != '..') {
-                    $photo = $element;
-                    $panorama->addPhotos($photo);
-
+                    $cheminPhoto = "";
+                    $cheminPhoto .= $element;
+                    var_dump($cheminPhoto);
+                    $photo = new Photos($cheminPhoto);
+                    Panorama::addPhotos($photo);
                 }
             }
             closedir($dir);
@@ -126,12 +127,11 @@ class ControleVisiteur
     public function debutPano()
     {
         global $chemin, $lesVues;
-        $panorama = Panorama::getInstance("");
-        echo 'nom projet :';
-        var_dump($panorama);
-        $photoEnCours = $panorama->find(filter_var($_POST['photo1'],FILTER_SANITIZE_STRING));
+        $cheminPhoto = filter_var($_POST['photo1'],FILTER_SANITIZE_STRING);
+        $photo = new Photos($cheminPhoto);
+        $photoEnCours = Panorama::find($photo);
         if ($photoEnCours != null) {
-            $panorama->setPhotoencours($photoEnCours);
+            Panorama::setPhotoencours($photoEnCours);
         }
         require($chemin.$lesVues['debutpano']);
     }

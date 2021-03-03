@@ -1,3 +1,4 @@
+<?php var_dump(Panorama::getListPhotos()[0]->getChemin());?>
 <!doctype html>
 <html lang="fr">
 <head>
@@ -25,7 +26,7 @@
             <a class="nav-item nav-link active" href="index.php">Accueil</a>
         </div>
     </div>
-            <span class="text-white align-self-center align-content-lg-center"><?php echo $panorama->getNom()?></span>
+            <span class="text-white align-self-center align-content-lg-center"><?php echo Panorama::getNom();?></span>
 </nav>
 <br>
 
@@ -42,9 +43,9 @@
                 <label>
                     <select name="photo1">
                         <?php
-                        foreach ($panorama->getListPhotos() as $photo){
+                        foreach (Panorama::getListPhotos() as $photo){
                             ?>
-                            <option value="<?php echo $photo->getNom()?>"><?php echo $photo->getNom()?></option>
+                            <option value="<?php echo $photo->getChemin();?>"><?php echo $photo->getChemin();?></option>
                             <?php
                         }
                         ?>

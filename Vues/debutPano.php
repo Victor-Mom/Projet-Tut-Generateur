@@ -1,3 +1,4 @@
+<?php echo Panorama::getPhotoencours()->getChemin();?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +21,7 @@
 
     <a-scene id="notreScene">
         <a-assets>
-            <img id="photo1" src="photosUpload/<?php echo $panorama->getPhotoencours(); ?>" alt=""/>
+            <img id="photo1" src="photosUpload/<?php echo Panorama::getPhotoencours()->getChemin(); ?>" alt=""/>
         </a-assets>
 
 

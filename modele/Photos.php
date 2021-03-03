@@ -2,25 +2,24 @@
 
 class Photos{
 
-    public $photos = "";
+    private $chemin;
     public $panneau = [];
     public $pointNav = [];
     public $isDone = false;
 
+    public function __construct(string $chemin)
+    {
+        $this->chemin = $chemin;
+    }
 
     public function isDone(): bool
     {
         return $this->isDone;
     }
 
-    public function setIsDone(bool $isDone): void
+    public function setIsDone(bool $isDone)
     {
         $this->isDone = $isDone;
-    }
-
-    public function __construct($photos)
-    {
-        $this->photos = $photos;
     }
 
     public function addPanneau($panneau){
@@ -31,9 +30,9 @@ class Photos{
         array_push($this->pointNav, $pointNav);
     }
 
-    public function getNom()
+    public function getChemin()
     {
-        return $this->photos;
+        return $this->chemin;
     }
 
 }

@@ -2,63 +2,51 @@
 
 class Panorama
 {
-    private $listPhotos = [];
-    private $nom;
+    private static $_listPhotos = [];
+    private static $_nom = "blabla";
     private static $_instance = null;
-    public $photoencours = null;
+    private static $_photoencours = null;
 
-    private function __construct($nom)
-    {
-        $this->nom = $nom;
-    }
-
-    public static function getInstance($nom) {
+    public static function getInstance($nom): Panorama {
         if(self::$_instance == null) {
-            self::$_instance = new Panorama($nom);
+            self::$_instance = new self();
+            self::$_nom = $nom;
         }
         return self::$_instance;
     }
 
-    public function getPhotoencours(): Photos
+    public static function getPhotoencours(): Photos
     {
-        return $this->photoencours;
+        return self::$_photoencours;
     }
 
-    public function setPhotoencours(Photos $photoencours)
+    public static function setPhotoencours(Photos $photoencours)
     {
-        $this->photoencours = $photoencours;
-    }
-
-
-    public function getListPhotos(): array
-    {
-        return $this->listPhotos;
+        self::$_photoencours = $photoencours;
     }
 
 
-    public function addPhotos($photos){
+    public static function getListPhotos(): array
+    {
+        return self::$_listPhotos;
+    }
+
+
+    public static function addPhotos($photos){
         $photo = new Photos($photos);
-        array_push($this->listPhotos, $photo);
+        array_push(self::$_listPhotos, $photo);
     }
 
 
-    public function find($nomPhoto) : ?Photos {
-        foreach ($this->listPhotos as $photo){
+    public static function find($nomPhoto) : ?Photos {
+        foreach (self::$_listPhotos as $photo){
             if($photo->getNom() == $nomPhoto) return $photo;
         }
         return null;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getNom()
+    public static function getNom()
     {
-        return $this->nom;
-    }
-
-    public function setNom($nom)
-    {
-        self::getInstance()->setNom($nom);
+        return self::$_nom;
     }
 }
