@@ -1,4 +1,3 @@
-<?php var_dump(Panorama::getListPhotos()[0]->getChemin());?>
 <!doctype html>
 <html lang="fr">
 <head>

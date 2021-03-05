@@ -2,10 +2,10 @@
 
 class Photos{
 
-    private $chemin;
-    public $panneau = [];
-    public $pointNav = [];
-    public $isDone = false;
+    private string $chemin;
+    public array $panneau = [];
+    public array $pointNav = [];
+    public bool $isDone = false;
 
     public function __construct(string $chemin)
     {
@@ -30,7 +30,7 @@ class Photos{
         array_push($this->pointNav, $pointNav);
     }
 
-    public function getChemin()
+    public function getChemin() : string
     {
         return $this->chemin;
     }

@@ -2,10 +2,10 @@
 
 class Panorama
 {
-    private static $_listPhotos = [];
-    private static $_nom = "blabla";
-    private static $_instance = null;
-    private static $_photoencours = null;
+    private static array $_listPhotos = [];
+    private static string $_nom = "blabla";
+    private static ?Panorama $_instance = null;
+    private static ?Photos $_photoencours = null;
 
     public static function getInstance($nom): Panorama {
         if(self::$_instance == null) {
@@ -15,7 +15,7 @@ class Panorama
         return self::$_instance;
     }
 
-    public static function getPhotoencours(): Photos
+    public static function getPhotoencours(): ?Photos
     {
         return self::$_photoencours;
     }
@@ -32,20 +32,22 @@ class Panorama
     }
 
 
-    public static function addPhotos($photos){
-        $photo = new Photos($photos);
+    public static function addPhotos(Photos $photo){
         array_push(self::$_listPhotos, $photo);
     }
 
 
-    public static function find($nomPhoto) : ?Photos {
-        foreach (self::$_listPhotos as $photo){
-            if($photo->getNom() == $nomPhoto) return $photo;
+    public static function find(string $chemin) : ?Photos {
+        foreach (Panorama::getListPhotos() as $p){
+            if($p->getChemin() == $chemin) {
+                var_dump($p->getChemin());
+                return $p;
+            }
         }
         return null;
     }
 
-    public static function getNom()
+    public static function getNom() : string
     {
         return self::$_nom;
     }
