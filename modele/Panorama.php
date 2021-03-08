@@ -31,7 +31,6 @@ class Panorama
         return self::$_listPhotos;
     }
 
-
     public static function addPhotos(Photos $photo){
         array_push(self::$_listPhotos, $photo);
     }
