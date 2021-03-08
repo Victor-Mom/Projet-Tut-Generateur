@@ -4,9 +4,6 @@
 class ControleVisiteur
 {
     public $tableauErreur = array();
-    public $listPhotos = array();
-    private $panorama;
-    public $fileName;
 
     function __construct()
     {
@@ -37,7 +34,12 @@ class ControleVisiteur
                     break;
 
                 case "COMMENCER" :
-                    require($chemin.$lesVues['debutpano']);
+                    $this->debutPano();
+                break;
+
+                case "SAVE" :
+                    echo "bijour";
+                    require($chemin.$lesVues['accueil']);
                 break;
 
                 default:
@@ -67,7 +69,6 @@ class ControleVisiteur
 
     public function formulaireAjout() {
         global $chemin, $lesVues;
-
         require($chemin . $lesVues['form']);
     }
 
@@ -76,6 +77,7 @@ class ControleVisiteur
         global $chemin, $lesVues;
 
         $nomProjet=Validation::val_texte($_POST['nomProjet']);
+        echo $nomProjet;
         if (!isset($nomProjet)) {
             $this->tableauErreur='nom de projet invalide/vide';
         }
@@ -110,6 +112,21 @@ class ControleVisiteur
             }
         }
         if($cpt == $total_fichier_upload){
+            $dir_nom = __DIR__."/../photosUpload";
+            $dir =  opendir($dir_nom) or die('Erreur de listage : le répertoire n\'existe pas');
+
+            $panorama = Panorama::getInstance("");
+            while(false !== ($element = readdir($dir))) {
+                if($element != '.' && $element != '..') {
+                    $cheminPhoto = "";
+                    $cheminPhoto .= $element;
+                    $photo = new Photos($cheminPhoto);
+                    $panorama::addPhotos($photo);
+                }
+            }
+            var_dump($panorama::getListPhotos());
+            var_dump($panorama::getNom());
+            closedir($dir);
             require($chemin . $lesVues['panorama']);
         }
     }
@@ -152,5 +169,23 @@ class ControleVisiteur
         if($reussi){
             require($chemin . $lesVues['carte']);
         }
+    public function debutPano()
+    {
+        global $chemin, $lesVues;
+        $panorama = Panorama::getInstance("");
+        var_dump($panorama);
+        var_dump($panorama::getNom());
+        var_dump($panorama::getListPhotos());
+        $cheminPhoto = filter_var($_POST['photo1'],FILTER_SANITIZE_STRING);
+        var_dump($cheminPhoto);
+        $photoEnCours = Panorama::find($cheminPhoto);
+        var_dump($photoEnCours);
+        var_dump(Panorama::getListPhotos());
+        var_dump(Panorama::getNom());
+        if ($photoEnCours != null) {
+            Panorama::setPhotoencours($photoEnCours);
+        }
+        var_dump(Panorama::getPhotoencours());
+        require($chemin.$lesVues['debutpano']);
     }
 }

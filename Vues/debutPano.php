@@ -1,3 +1,4 @@
+<?php echo Panorama::getPhotoencours()->getChemin();?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,57 +11,17 @@
     <script src="https://unpkg.com/aframe-animation-component@^4.1.2/dist/aframe-animation-component.min.js"></script>
 
     <script src="https://unpkg.com/aframe-look-at-component@0.5.1/dist/aframe-look-at-component.min.js"></script>
-    <script>
-        AFRAME.registerComponent('hotspots',{
-            init:function(){
-                this.el.addEventListener('reloadspots',function(evt){
+    <script src="Vues/js/script.js"></script>
 
-                    //get the entire current spot group and scale it to 0
-                    var currspotgroup=document.getElementById(evt.detail.currspots);
-                    currspotgroup.setAttribute("scale","0 0 0");
-
-                    //get the entire new spot group and scale it to 1
-                    var newspotgroup=document.getElementById(evt.detail.newspots);
-                    newspotgroup.setAttribute("scale","1 1 1");
-                });
-            }
-        });
-        AFRAME.registerComponent('spot',{
-            schema:{
-                linkto:{type:"string",default:""},
-                spotgroup:{type:"string",default:""}
-            },
-            init:function(){
-
-                //add image source of hotspot icon
-                //this.el.setAttribute("src","#fleche");
-                //make the icon look at the camera all the time
-                this.el.setAttribute("look-at","#cam");
-
-
-
-                var data=this.data;
-
-                this.el.addEventListener('click',function(){
-                    //set the skybox source to the new image as per the spot
-                    var sky=document.getElementById("skybox");
-                    sky.setAttribute("src",data.linkto);
-
-                    var spotcomp=document.getElementById("spots");
-                    var currspots=this.parentElement.getAttribute("id");
-                    //create event for spots component to change the spots data
-                    spotcomp.emit('reloadspots',{newspots:data.spotgroup,currspots:currspots});
-                });
-
-            }
-        });
-
-    </script>
 </head>
 <body>
-    <a-scene>
+    <form method="post" id="notreFormulaire">
+        <input type="hidden" name="action" value="SAVE">
+    </form>
+
+    <a-scene id="notreScene">
         <a-assets>
-            <img id="photo1" src="photosUpload/<?php echo $_POST['photo1']; ?>" alt=""/>
+            <img id="photo1" src="photosUpload/<?php echo Panorama::getPhotoencours()->getChemin(); ?>" alt=""/>
         </a-assets>
 
 

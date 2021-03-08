@@ -2,49 +2,52 @@
 
 class Panorama
 {
-    private $listPhotos = [];
-    private $panneau = [];
-    private $pointNav = [];
-    private $nom;
-    private static $_instance = null;
+    private static array $_listPhotos = [];
+    private static string $_nom = "blabla";
+    private static ?Panorama $_instance = null;
+    private static ?Photos $_photoencours = null;
 
-    /**
-     * @return array
-     */
-    public function getListPhotos(): array
-    {
-        return $this->listPhotos;
-    }
-
-    public function __construct($nom)
-    {
-        $this->nom = $nom;
-    }
-
-    public static function getInstance($nomPano) {
-        if(is_null(self::$_instance)) {
-            self::$_instance = new Panorama($nomPano);
+    public static function getInstance($nom): Panorama {
+        if(self::$_instance == null) {
+            self::$_instance = new self();
+            self::$_nom = $nom;
         }
         return self::$_instance;
     }
 
-    public function addPanneau($panneau){
-        array_push($this->panneau, $panneau);
-    }
-
-    public function addPointNav($pointNav){
-        array_push($this->pointNav, $pointNav);
-    }
-
-    public function addPhotos($photos){
-        array_push($this->listPhotos, $photos);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getNom()
+    public static function getPhotoencours(): ?Photos
     {
-        return $this->nom;
+        return self::$_photoencours;
+    }
+
+    public static function setPhotoencours(Photos $photoencours)
+    {
+        self::$_photoencours = $photoencours;
+    }
+
+
+    public static function getListPhotos(): array
+    {
+        return self::$_listPhotos;
+    }
+
+    public static function addPhotos(Photos $photo){
+        array_push(self::$_listPhotos, $photo);
+    }
+
+
+    public static function find(string $chemin) : ?Photos {
+        foreach (Panorama::getListPhotos() as $p){
+            if($p->getChemin() == $chemin) {
+                var_dump($p->getChemin());
+                return $p;
+            }
+        }
+        return null;
+    }
+
+    public static function getNom() : string
+    {
+        return self::$_nom;
     }
 }

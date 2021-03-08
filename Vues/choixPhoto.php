@@ -1,19 +1,3 @@
-<?php
-    $dir_nom = __DIR__."/../photosUpload";
-    $dir =  opendir($dir_nom) or die('Erreur de listage : le répertoire n\'existe pas');
-
-    $panorama = new Panorama($_POST['nomProjet']);
-
-    while($element = readdir($dir)) {
-        if($element != '.' && $element != '..') {
-            $photo = $element;
-            $panorama->addPhotos($photo);
-
-        }
-    }
-    closedir($dir);
-
-?>
 <!doctype html>
 <html lang="fr">
 <head>
@@ -41,7 +25,7 @@
             <a class="nav-item nav-link active" href="index.php">Accueil</a>
         </div>
     </div>
-            <span class="text-white align-self-center align-content-lg-center"><?php echo $panorama->getNom()?></span>
+            <span class="text-white align-self-center align-content-lg-center"><?php echo Panorama::getNom();?></span>
 </nav>
 <br>
 
@@ -58,9 +42,9 @@
                 <label>
                     <select name="photo1">
                         <?php
-                        foreach ($panorama->getListPhotos() as $photo){
+                        foreach (Panorama::getListPhotos() as $photo){
                             ?>
-                            <option value="<?php echo $photo?>"><?php echo $photo?></option>
+                            <option value="<?php echo $photo->getChemin();?>"><?php echo $photo->getChemin();?></option>
                             <?php
                         }
                         ?>
@@ -88,6 +72,3 @@
 <footer class="align-bottom fixed-bottom"><p>FERRERE Clément - MOMMALIER Victor - MAZELLA Enzo - PONCET Clara - VELUT Lucile </p> |<p> DUT Informatique de Clermont-Ferrand </p></footer>
 
 </html>
-
-
-

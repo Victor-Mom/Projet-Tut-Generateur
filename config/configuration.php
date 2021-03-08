@@ -2,7 +2,6 @@
 
 $chemin=__DIR__.'/../';
 
-
 //Vues
 
 $lesVues['accueil']='vues/accueil.php';
