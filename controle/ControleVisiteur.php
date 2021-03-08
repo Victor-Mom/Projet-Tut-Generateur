@@ -150,25 +150,27 @@ class ControleVisiteur
 
         if (!in_array($extFichierSubmit, $fileExt)) {
             $this->tableauErreur = $fileName . " : n'est pas une image au format .png, .jpg ou .jpeg";
-                require($chemin . $lesVues['formCarte']);
+            require($chemin . $lesVues['formCarte']);
         }
 
 
         if ($maxFileSize < $_FILES['photoCarte']['size']) {
-            $this->tableauErreur= $fileName . " : Fichier trop volumineux";
+            $this->tableauErreur = $fileName . " : Fichier trop volumineux";
             require($chemin . $lesVues['formCarte']);
 
         } else {
-            if(!file_exists ( "photosUpload" )){
+            if (!file_exists("photosUpload")) {
                 mkdir("photosUpload");
             }
             $fileName = "photosUpload/" . $fileName;
             $reussi = move_uploaded_file($_FILES['photoCarte']['tmp_name'], $fileName);
         }
 
-        if($reussi){
+        if ($reussi) {
             require($chemin . $lesVues['carte']);
         }
+    }
+
     public function debutPano()
     {
         global $chemin, $lesVues;
