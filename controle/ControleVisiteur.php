@@ -14,7 +14,7 @@ class ControleVisiteur
             switch ($action) {
 
                 case NULL:
-                    $this->accueil(); //appeler page d'accueil
+                    $this->accueil();
                     break;
 
                 case "formulaireAjoutPhotos":
@@ -24,12 +24,12 @@ class ControleVisiteur
                 case "valider" :
                     $this->validerFormulaire();
                     break;
-
+                /*
                 case "formulaireAjoutPhotoCarte":
                     $this->formulaireAjoutPhotoCarte();
-                    break;
+                    break; */
 
-                case "Valider ce choix" :
+                case "ValiderCeChoix" :
                     $this->validerFormulaireCarte();
                     break;
 
@@ -38,8 +38,8 @@ class ControleVisiteur
                 break;
 
                 case "SAVE" :
-                    echo "bijour";
-                    require($chemin.$lesVues['accueil']);
+
+                    $this->boucle();
                 break;
 
                 default:
@@ -116,6 +116,7 @@ class ControleVisiteur
             $dir =  opendir($dir_nom) or die('Erreur de listage : le répertoire n\'existe pas');
 
             $panorama = Panorama::getInstance("");
+            $_SESSION['panorama']=$panorama;
             while(false !== ($element = readdir($dir))) {
                 if($element != '.' && $element != '..') {
                     $cheminPhoto = "";
@@ -124,8 +125,11 @@ class ControleVisiteur
                     $panorama::addPhotos($photo);
                 }
             }
-            var_dump($panorama::getListPhotos());
-            var_dump($panorama::getNom());
+            //var_dump($panorama::getListPhotos());
+            $_SESSION['photos']=$panorama::getListPhotos();
+
+            //var_dump($panorama::getNom());
+            $_SESSION['titre']=$panorama::getNom();
             closedir($dir);
             require($chemin . $lesVues['panorama']);
         }
@@ -167,27 +171,56 @@ class ControleVisiteur
         }
 
         if ($reussi) {
-            require($chemin . $lesVues['carte']);
+
+            var_dump($fileName);
+            $this->afficherCarte();
+            return;
         }
+        $this->tableauErreur = $fileName . " : le fichier veut pas bouger (dsl)";
+        require($chemin . $lesVues['formCarte']);
+
+    }
+
+    public function afficherCarte(){
+        global $chemin, $lesVues;
+        require($chemin.$lesVues['carte']);
     }
 
     public function debutPano()
     {
         global $chemin, $lesVues;
-        $panorama = Panorama::getInstance("");
-        var_dump($panorama);
-        var_dump($panorama::getNom());
-        var_dump($panorama::getListPhotos());
+
+        $lesPhotos=$_SESSION['photos'];
+
         $cheminPhoto = filter_var($_POST['photo1'],FILTER_SANITIZE_STRING);
-        var_dump($cheminPhoto);
-        $photoEnCours = Panorama::find($cheminPhoto);
-        var_dump($photoEnCours);
-        var_dump(Panorama::getListPhotos());
-        var_dump(Panorama::getNom());
-        if ($photoEnCours != null) {
-            Panorama::setPhotoencours($photoEnCours);
+
+        foreach ($lesPhotos as $p){
+            if($p->getChemin() == $cheminPhoto) {
+
+                $photoEnCours=$p;
+            }
         }
-        var_dump(Panorama::getPhotoencours());
+        $index=array_search($photoEnCours,$lesPhotos);
+        unset($lesPhotos[$index]);
+        array_unshift($lesPhotos,$photoEnCours);
+        $_SESSION['photos']=$lesPhotos;
+
+        require($chemin.$lesVues['debutpano']);
+    }
+
+    public function boucle(){
+        global $chemin, $lesVues;
+        $lesPhotos=$_SESSION['photos'];
+
+        if(!isset($_SESSION['compteur'])){ $_SESSION['compteur']=1;}
+        if($_SESSION['compteur']==count($lesPhotos)){
+            unset($_SESSION['compteur']);
+            $this->formulaireAjoutPhotoCarte();
+            return;
+        }
+        $photoEnCours=$lesPhotos[$_SESSION['compteur']];
+        $_SESSION['compteur']+=1;
+
         require($chemin.$lesVues['debutpano']);
     }
 }

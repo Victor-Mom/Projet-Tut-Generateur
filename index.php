@@ -9,8 +9,10 @@ require_once(__DIR__.'/config/Autoload.php');
 Autoload::charger();
 Panorama::getInstance("notrePanorama");
 
+
 //début de la session
 session_start();
+//unset($_SESSION['compteur']);
 
 $ctrl = new ControleVisiteur();
 
