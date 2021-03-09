@@ -23,15 +23,80 @@ body {
 	padding-top: 9px;
 }
 
+#sauvegarderPano {
+	margin-top: 10%;
+}
+
 .navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link:focus {
 	color: #FFD700;
 }
 
+.soustitre {
+	font-size: 25px;
+}
+
+#etape1 {
+	text-align: center;
+	background-color: #FCD21C;
+	color:black;
+	padding-left: 10%;
+	padding-bottom: 2%;
+	padding-top: 2%;
+
+}
+
+#etape2 {
+	text-align: center;
+	background-color: #383434;
+	color:#FCD21C;
+	padding-left: 10%;
+	padding-bottom: 2%;
+	padding-top: 2%;
+}
+
+#etape3 {
+	text-align: center;
+	background-color: #FCD21C;
+	color:black;
+	padding-left: 10%;
+	padding-bottom: 2%;
+	padding-top: 2%;
+}
+#etape4 {
+	text-align: center;
+	background-color: #383434;
+	color:#FCD21C;
+	padding-left: 10%;
+	padding-bottom: 2%;
+	padding-top: 2%;
+}
+#etape5 {
+	text-align: center;
+	background-color: #383434;
+	padding-left: 10%;
+	padding-bottom: 2%;
+	padding-top: 2%;
+}
+
+#etape1 div {
+	text-align: center;
+}
+
+#accueil2 {
+	background-color: #FCD21C;
+}
+
+#accueil2 div {
+	text-align: center;
+	height: auto;
+	padding-bottom: 2%;
+}
 
 #boutonCreer{
 
 	display: block;
 	text-align: center;
+	margin-bottom: 7%;
 
 
 }

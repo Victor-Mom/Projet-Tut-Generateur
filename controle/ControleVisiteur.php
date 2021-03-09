@@ -24,13 +24,13 @@ class ControleVisiteur
                 case "valider" :
                     $this->validerFormulaire();
                     break;
-                /*
-                case "formulaireAjoutPhotoCarte":
-                    $this->formulaireAjoutPhotoCarte();
-                    break; */
 
                 case "ValiderCeChoix" :
                     $this->validerFormulaireCarte();
+                    break;
+
+                case "TUTORIEL" :
+                    $this->tuto();
                     break;
 
                 case "COMMENCER" :
@@ -279,5 +279,10 @@ class ControleVisiteur
         $_SESSION['carte'] = $laCarte;
 
         require($chemin . $lesVues['fin']);
+    }
+
+    public function tuto() {
+        global $chemin, $lesVues;
+        require($chemin . $lesVues['tuto']);
     }
 }

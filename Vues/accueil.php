@@ -54,7 +54,7 @@
 		<section id="creation">
                 <form method="POST">
 				    <div id="boutonCreer">
-					    <button name="action" value="formulaireAjoutPhotos" type="submit" class="btn btn-warning"><strong>Créer mon propre panorama</strong></button>
+					    <button name="action" value="TUTORIEL" type="submit" class="btn btn-warning"><strong>Créer mon propre panorama</strong></button>
 				    </div>
                 </form>
 			
@@ -107,7 +107,7 @@
 	
 
 <!-- FOOTER -->
- 		<footer><p>FERRERE Clément - MOMMALIER Victor - MAZELLA Enzo - PONCET Clara - VELUT Lucile </p> |<p> DUT Informatique de Clermont-Ferrand </p></footer>
+ 		<footer><p>FERRERE Clément - MOMMALIER Victor - PONCET Clara - VELUT Lucile </p> |<p> DUT Informatique de Clermont-Ferrand </p></footer>
 
 	
 <!-- SCRIPTS JS -->

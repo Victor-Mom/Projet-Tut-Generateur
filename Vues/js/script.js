@@ -42,6 +42,17 @@ window.addEventListener('keydown', (event) => {
         case 'a' : //CHANGEMENT D'AXE
             cle = (cle + 1) % 3;
             break;
+        case 'h' : //AFFICHAGE DE L'AIDE MEMOIRE
+            window.alert("P : créer un panneau\n" +
+                "N : créer un point de navigation\n" +
+                "\n" +
+                "flèches (gauche et droite) : déplacer l'élément sur un axe\n" +
+                "A : changer d'axe\n" +
+                "\n" +
+                "J : passer à la photo suivante\n" +
+                "\n" +
+                "H : afficher l'aide mémoire pour les touches\n");
+            break;
         case 'ArrowLeft' : //DEPLACEMENT SUR L'AXE CHOISI
             div = document.getElementById("notreScene");
             monPanneau = div.lastChild;

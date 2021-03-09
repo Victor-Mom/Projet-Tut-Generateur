@@ -69,6 +69,6 @@
     </div>
 </div>
 </body>
-<footer class="align-bottom fixed-bottom"><p>FERRERE Clément - MOMMALIER Victor - MAZELLA Enzo - PONCET Clara - VELUT Lucile </p> |<p> DUT Informatique de Clermont-Ferrand </p></footer>
+<footer class="align-bottom fixed-bottom"><p>FERRERE Clément - MOMMALIER Victor - PONCET Clara - VELUT Lucile </p> |<p> DUT Informatique de Clermont-Ferrand </p></footer>
 
 </html>
