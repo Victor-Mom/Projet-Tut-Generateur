@@ -11,7 +11,6 @@ class Photos{
         $this->chemin = $chemin;
     }
 
-
     public function addPanneau($panneau){
         array_push($this->panneau, $panneau);
     }

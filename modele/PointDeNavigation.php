@@ -3,8 +3,11 @@
 
 class PointDeNavigation
 {
-    private $x;
-    private $y;
-    private $z;
-    private $photosRelie;
+    private string $position;
+    private string $destination;
+
+    public function __construct(string $dest, string $pos) {
+        $this->destination = $dest;
+        $this->position = $pos;
+    }
 }

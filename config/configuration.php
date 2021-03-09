@@ -11,4 +11,5 @@ $lesVues['formCarte']='vues/photoCarte.php';
 $lesVues['panorama']='vues/choixPhoto.php';
 $lesVues['debutpano']='vues/debutPano.php';
 $lesVues['carte']='vues/carte.php';
+$lesVues['fin']='vues/pageFin.php';
 ?>

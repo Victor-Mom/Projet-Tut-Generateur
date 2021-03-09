@@ -16,7 +16,8 @@
 </head>
 <body>
     <form method="POST" action="index.php?action=SAVE" id="notreFormulaire">
-        <input id="envoi" type="submit" value="SAVE" hidden="hidden" />
+        <input id="nbElements" name="nbElements" type="text" value="0" hidden="hidden"/>
+        <input id="envoi" type="submit" value="SAVE" hidden="hidden"/>
     </form>
 
     <a-scene id="notreScene">

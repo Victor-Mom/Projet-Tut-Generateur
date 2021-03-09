@@ -10,7 +10,11 @@
 <body>
 
 
-<form id="formulaireCarteJS"></form>
+<form id="formulaireCarteJS" method="POST" action="index.php?action=SaveCarte">
+    <input id="nbElements" name="nbElements" type="text" value="0" hidden="hidden"/>
+    <input id="envoi" type="submit" value="SAVE" hidden="hidden"/>
+</form>
+
 <a-scene id="sceneCarte">
     <a-sky id="skybox" src="#fondBlanc"></a-sky>
 
@@ -20,7 +24,7 @@
     </a-assets>
 
     <a-assets>
-        <img id="photoCarte" src="<?php echo $fileName; ?>" alt=""/>
+        <img id="photoCarte" src="<?php echo $laCarte->getChemin(); ?>" alt=""/>
     </a-assets>
 
     <a-entity id="cam" camera position="0 1.6 0" look-controls wasd-controls="enabled:false">

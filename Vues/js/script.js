@@ -6,6 +6,7 @@ var coord;
 var cle=0;
 var form=document.getElementById("notreFormulaire");
 var input;
+var input2;
 var lesElements;
 window.addEventListener('keydown', (event) => {
     switch(event.key) {
@@ -31,7 +32,7 @@ window.addEventListener('keydown', (event) => {
             coord= {x: -2, y: 4, z:-10};
             monPanneau.setAttribute("position",coord);
             let chemin = "photosUpload/" + text;
-            monPanneau.setAttribute("link","href:"+chemin);
+            monPanneau.setAttribute("id",chemin);
             monPanneau.setAttribute("class", "point");
             monPanneau.setAttribute("src","Vues/photos/fleche.png");
             monPanneau.setAttribute("look-at","#cam");
@@ -70,33 +71,48 @@ window.addEventListener('keydown', (event) => {
             monPanneau.setAttribute("position",coord);
             break;
         case 'j' : //SAUVEGARDE DES ELEMENTS CREES
+            let nbElements = 0;
             form=document.getElementById("notreFormulaire");
             let panneaux = Array.from(document.getElementsByClassName("panneau"));
             let points = Array.from(document.getElementsByClassName("point"));
             lesElements = panneaux.concat(points);
-            lesElements.forEach(element => sauvegarde(element));
+            let count = lesElements.length;
+            for (let i=0; i<count; i++) {
+                sauvegarde(lesElements[i],nbElements);
+                nbElements += 3;
+            }
+            let info = document.getElementById("nbElements");
+            info.setAttribute("value",nbElements.toString());
             form.submit();
             break;
         default :
             break;
     }
 
-    function sauvegarde(item){
+    function sauvegarde(item,nb){
         form=document.getElementById("notreFormulaire");
         input = document.createElement("input");
         input.setAttribute("type","text");
+        input2 = document.createElement("input");
+        input2.setAttribute("type","text");
+        input2.setAttribute("name","item"+(nb));
         if (item.className === "panneau") {
             input.setAttribute("value",item.getAttribute("text").value);
+            input2.setAttribute("value","panneau");
         }
         else {
-            input.setAttribute("value",item.getAttribute("link"));
+            input.setAttribute("value",item.getAttribute("id"));
+            input2.setAttribute("value","point");
         }
+        input.setAttribute("name","item"+(nb+1));
         form.appendChild(input);
+        form.appendChild(input2);
         input = document.createElement("input");
         input.setAttribute("type","text");
         coord=item.getAttribute("position");
         coord = coord["x"] + " " + coord["y"] + " " + coord["z"];
         input.setAttribute("value",coord);
+        input.setAttribute("name","item"+(nb+2));
         form.appendChild(input);
     }
 

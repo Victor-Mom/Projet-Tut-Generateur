@@ -3,9 +3,13 @@
 
 class Panneau
 {
-    private $x;
-    private $y;
-    private $z;
-    private $message;
-    private $imageCorrespondante;
+    private string $position;
+    private string $message;
+    //private $imageCorrespondante;
+
+    public function __construct(string $text, string $pos)
+    {
+        $this->message = $text;
+        $this->position = $pos;
+    }
 }

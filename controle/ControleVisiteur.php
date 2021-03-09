@@ -35,12 +35,15 @@ class ControleVisiteur
 
                 case "COMMENCER" :
                     $this->debutPano();
-                break;
+                    break;
 
                 case "SAVE" :
-
                     $this->boucle();
-                break;
+                    break;
+
+                case "SaveCarte" :
+                    $this->saveCarte();
+                    break;
 
                 default:
                     $this->tableauErreur[] = "Mauvais appel php";
@@ -125,10 +128,8 @@ class ControleVisiteur
                     $panorama::addPhotos($photo);
                 }
             }
-            //var_dump($panorama::getListPhotos());
             $_SESSION['photos']=$panorama::getListPhotos();
 
-            //var_dump($panorama::getNom());
             $_SESSION['titre']=$panorama::getNom();
             closedir($dir);
             require($chemin . $lesVues['panorama']);
@@ -171,8 +172,8 @@ class ControleVisiteur
         }
 
         if ($reussi) {
-
-            var_dump($fileName);
+            $carte = new Photos($fileName);
+            $_SESSION['carte'] = $carte;
             $this->afficherCarte();
             return;
         }
@@ -183,6 +184,7 @@ class ControleVisiteur
 
     public function afficherCarte(){
         global $chemin, $lesVues;
+        $laCarte = $_SESSION['carte'];
         require($chemin.$lesVues['carte']);
     }
 
@@ -213,14 +215,69 @@ class ControleVisiteur
         $lesPhotos=$_SESSION['photos'];
 
         if(!isset($_SESSION['compteur'])){ $_SESSION['compteur']=1;}
-        if($_SESSION['compteur']==count($lesPhotos)){
+
+        $indexPhoto = filter_var($_SESSION['compteur'],FILTER_SANITIZE_NUMBER_INT);
+
+        $photoTerminee = $lesPhotos[$indexPhoto-1];
+
+        $nbItem = filter_var($_POST['nbElements'],FILTER_SANITIZE_NUMBER_INT);
+
+        if ($nbItem != 0) {
+            for ($i=0 ; $i < $nbItem ; $i++) {
+                $nom = 'item'. $i;
+                $type = $_POST[$nom];
+                $i++;
+                $nom = 'item'. $i;
+                $valeur = filter_var($_POST[$nom],FILTER_SANITIZE_STRING);
+                $i++;
+                $nom = 'item'. $i;
+                $coord = filter_var($_POST[$nom],FILTER_SANITIZE_STRING);
+                if ($type == 'panneau') {
+                    $panneau  = new Panneau($valeur,$coord);
+                    $photoTerminee->panneau[] = $panneau;
+                }
+                elseif ($type == 'point') {
+                    $point = new PointDeNavigation($valeur,$coord);
+                    $photoTerminee->pointNav[] = $point;
+                }
+            }
+        }
+
+        $lesPhotos[$indexPhoto-1] = $photoTerminee;
+
+        if($indexPhoto==count($lesPhotos)){
             unset($_SESSION['compteur']);
             $this->formulaireAjoutPhotoCarte();
             return;
         }
-        $photoEnCours=$lesPhotos[$_SESSION['compteur']];
-        $_SESSION['compteur']+=1;
+
+        $photoEnCours=$lesPhotos[$indexPhoto];
+        $_SESSION['compteur'] = $indexPhoto + 1;
+        $_SESSION['photos'] = $lesPhotos;
 
         require($chemin.$lesVues['debutpano']);
+    }
+
+    public function saveCarte() {
+        global $chemin, $lesVues;
+
+        $laCarte = $_SESSION['carte'];
+
+        $nbItem = filter_var($_POST['nbElements'],FILTER_SANITIZE_NUMBER_INT);
+        if ($nbItem != 0) {
+            for ($i=0 ; $i < $nbItem ; $i++) {
+                $nom = 'item'. $i;
+                $dest = $_POST[$nom];
+                $i++;
+                $nom = 'item'. $i;
+                $coord = filter_var($_POST[$nom],FILTER_SANITIZE_STRING);
+                $point = new PointDeNavigation($dest,$coord);
+                $laCarte->pointNav[] = $point;
+            }
+        }
+
+        $_SESSION['carte'] = $laCarte;
+
+        require($chemin . $lesVues['fin']);
     }
 }
