@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Index</title>
+    <title>Carte</title>
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-slice9-component/dist/aframe-slice9-component.min.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@0.5.1/dist/aframe-look-at-component.min.js"></script>
@@ -20,7 +20,7 @@
     </a-assets>
 
     <a-assets>
-        <img id="photoCarte" src="<?php echo $fileName ?>" alt=""/>
+        <img id="photoCarte" src="<?php echo $fileName; ?>" alt=""/>
     </a-assets>
 
     <a-entity id="cam" camera position="0 1.6 0" look-controls wasd-controls="enabled:false">
@@ -31,7 +31,7 @@
         </a-entity>
     </a-entity>
 
-    <a-plane position="-1.89574 1.6 -1.96425" src="#photoCarte" look-at="#cam" height="4" width="6" material="" geometry="" rotation="0 43.98317825991033 0">
+    <a-plane position="-1.89574 1.6 -1.96425" src="#photoCarte" look-at="#cam" height="4" width="6"  rotation="0 43.98317825991033 0">
     </a-plane>
 
 </a-scene>

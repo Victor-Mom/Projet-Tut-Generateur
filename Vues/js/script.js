@@ -70,17 +70,11 @@ window.addEventListener('keydown', (event) => {
             monPanneau.setAttribute("position",coord);
             break;
         case 'j' : //SAUVEGARDE DES ELEMENTS CREES
+            form=document.getElementById("notreFormulaire");
             let panneaux = Array.from(document.getElementsByClassName("panneau"));
             let points = Array.from(document.getElementsByClassName("point"));
             lesElements = panneaux.concat(points);
             lesElements.forEach(element => sauvegarde(element));
-
-            input = document.createElement("input");
-            input.setAttribute("type","submit");
-            input.setAttribute("name","action");
-            input.setAttribute("value","SAVE");
-            form.appendChild(input);
-
             form.submit();
             break;
         default :
@@ -88,6 +82,7 @@ window.addEventListener('keydown', (event) => {
     }
 
     function sauvegarde(item){
+        form=document.getElementById("notreFormulaire");
         input = document.createElement("input");
         input.setAttribute("type","text");
         if (item.className === "panneau") {

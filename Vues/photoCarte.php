@@ -29,9 +29,9 @@
 </nav>
 <br>
 
-<div  >
+<div>
     <div>
-        <form method="POST" enctype="multipart/form-data">
+        <form method="POST" action="index.php?action=ValiderCeChoix" enctype="multipart/form-data">
             <br/>
 
             <br/>
@@ -55,7 +55,7 @@
             <br/>
             <div class="text-center">
                 <div class="button-login">
-                    <input class="btn btn-warning" type="submit" name="action" value="Valider ce choix">
+                    <input class="btn btn-warning" type="submit" name="action" value="ValiderCeChoix">
                 </div>
             </div>
 

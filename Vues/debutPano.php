@@ -1,4 +1,4 @@
-<?php echo Panorama::getPhotoencours()->getChemin();?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,13 +15,13 @@
 
 </head>
 <body>
-    <form method="post" id="notreFormulaire">
-        <input type="hidden" name="action" value="SAVE">
+    <form method="POST" action="index.php?action=SAVE" id="notreFormulaire">
+        <input id="envoi" type="submit" value="SAVE" hidden="hidden" />
     </form>
 
     <a-scene id="notreScene">
         <a-assets>
-            <img id="photo1" src="photosUpload/<?php echo Panorama::getPhotoencours()->getChemin(); ?>" alt=""/>
+            <img id="photo1" src="photosUpload/<?php echo $photoEnCours->getChemin(); ?>" alt=""/>
         </a-assets>
 
 
