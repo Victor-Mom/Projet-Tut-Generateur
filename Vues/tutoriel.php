@@ -51,7 +51,7 @@
         <p class="soustitre"><strong>ETAPE 2 : Placer son élément</strong></p>
         <p><strong> Pour déplacer un panneau ou un point de navigation, il suffit d'appuyer sur les flèches droite et gauche.</strong></p>
         <p><strong> On peut ensuite changer d'axe en appuyant sur la touche A , puis les flèches du clavier déplacerons l'objet sur un axe différent.</strong></p>
-        <p><strong> NOTE : Une fois que l'élément est placé, il n'est pas possible de revenir à l'axe précédent !</strong></p>
+        <p><strong> NOTE : Une fois que l'élément est placé, il n'est pas possible de revenir à l'élément précédent !</strong></p>
         </div>
     </section>
     <br/>
@@ -70,7 +70,7 @@
     <section id="etape4">
         <div>
         <p class="soustitre"><strong>AIDE-MEMOIRE</strong></p>
-        <p><strong> A tout moment, pour vous rappelez les touches utiles, appuyer sur la touche H !</strong></p>
+        <p><strong> A tout moment, pour vous rappeler les touches utiles, appuyer sur la touche H !</strong></p>
         <p><strong> Ca y est, vous êtes formé !</strong></p>
         </div>
     </section>

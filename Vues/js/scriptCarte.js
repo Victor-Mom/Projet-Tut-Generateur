@@ -32,11 +32,11 @@ window.addEventListener('keydown', (event) => {
             monPanneau = div.lastChild;
             coord = monPanneau.getAttribute("position");
             switch (cle) {
-                case 0 : coord["x"] -= 0.5;
+                case 0 : coord["x"] -= 0.25;
                     break;
-                case 1 : coord["y"] -= 0.5;
+                case 1 : coord["y"] -= 0.25;
                     break;
-                case 2 : coord["z"] -= 0.5;
+                case 2 : coord["z"] -= 0.25;
                     break;
             }
             monPanneau.setAttribute("position",coord);
@@ -46,11 +46,11 @@ window.addEventListener('keydown', (event) => {
             monPanneau = div.lastChild;
             coord = monPanneau.getAttribute("position");
             switch (cle) {
-                case 0 : coord["x"] += 0.5;
+                case 0 : coord["x"] += 0.25;
                     break;
-                case 1 : coord["y"] += 0.5;
+                case 1 : coord["y"] += 0.25;
                     break;
-                case 2 : coord["z"] += 0.5;
+                case 2 : coord["z"] += 0.25;
                     break;
             }
             monPanneau.setAttribute("position",coord);
@@ -67,6 +67,17 @@ window.addEventListener('keydown', (event) => {
             let info = document.getElementById("nbElements");
             info.setAttribute("value",nbElements.toString());
             form.submit();
+            break;
+        case 'h' : //AFFICHAGE DE L'AIDE MEMOIRE
+            window.alert("P : créer un panneau\n" +
+                "N : créer un point de navigation\n" +
+                "\n" +
+                "flèches (gauche et droite) : déplacer l'élément sur un axe\n" +
+                "A : changer d'axe\n" +
+                "\n" +
+                "J : passer à la photo suivante\n" +
+                "\n" +
+                "H : afficher l'aide mémoire pour les touches\n");
             break;
         default :
             break;

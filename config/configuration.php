@@ -13,4 +13,5 @@ $lesVues['debutpano']='vues/debutPano.php';
 $lesVues['carte']='vues/carte.php';
 $lesVues['fin']='vues/pageFin.php';
 $lesVues['tuto']='vues/tutoriel.php';
+$lesVues['resultat']='vues/resultat.php';
 ?>

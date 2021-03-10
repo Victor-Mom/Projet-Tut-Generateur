@@ -45,6 +45,10 @@ class ControleVisiteur
                     $this->saveCarte();
                     break;
 
+                case "boutonTelecharger" :
+                    $this->generation();
+                    break;
+
                 default:
                     $this->tableauErreur[] = "Mauvais appel php";
                     require($chemin . $lesVues['erreur']);
@@ -118,8 +122,7 @@ class ControleVisiteur
             $dir_nom = __DIR__."/../photosUpload";
             $dir =  opendir($dir_nom) or die('Erreur de listage : le répertoire n\'existe pas');
 
-            $panorama = Panorama::getInstance("");
-            $_SESSION['panorama']=$panorama;
+            $panorama = Panorama::getInstance($nomProjet);
             while(false !== ($element = readdir($dir))) {
                 if($element != '.' && $element != '..') {
                     $cheminPhoto = "";
@@ -128,6 +131,8 @@ class ControleVisiteur
                     $panorama::addPhotos($photo);
                 }
             }
+            $_SESSION['panorama']=$panorama;
+
             $_SESSION['photos']=$panorama::getListPhotos();
 
             $_SESSION['titre']=$panorama::getNom();
@@ -172,6 +177,7 @@ class ControleVisiteur
         }
 
         if ($reussi) {
+            $fileName = substr($fileName, strpos($fileName, "/")+1);
             $carte = new Photos($fileName);
             $_SESSION['carte'] = $carte;
             $this->afficherCarte();
@@ -284,5 +290,22 @@ class ControleVisiteur
     public function tuto() {
         global $chemin, $lesVues;
         require($chemin . $lesVues['tuto']);
+    }
+
+    public function generation() {
+        global $chemin, $lesVues;
+
+        $lesPhotos = $_SESSION['photos'];
+        $nbPhotos = count($lesPhotos);
+        $laCarte = $_SESSION['carte'];
+        foreach ($lesPhotos[0]->panneau as $p){
+            var_dump($p);
+        }
+        foreach ($lesPhotos[0]->pointNav as $nav){
+            var_dump($nav);
+        }
+        var_dump($laCarte->sansExtension());
+        var_dump($nbPhotos);
+        require($chemin . $lesVues['resultat']);
     }
 }

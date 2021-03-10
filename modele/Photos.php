@@ -11,17 +11,14 @@ class Photos{
         $this->chemin = $chemin;
     }
 
-    public function addPanneau($panneau){
-        array_push($this->panneau, $panneau);
-    }
-
-    public function addPointNav($pointNav){
-        array_push($this->pointNav, $pointNav);
-    }
-
     public function getChemin() : string
     {
         return $this->chemin;
     }
 
+    public function sansExtension() : string
+    {
+        $nom = substr($this->chemin, 0, strpos($this->chemin, "."));
+        return $nom;
+    }
 }

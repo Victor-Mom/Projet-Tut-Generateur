@@ -42,9 +42,11 @@
     <br/>
 
     <section id="creation">
+        <form method="POST">
             <div id="boutonCreer">
-                <button name="action" value="boutonTelecharger" type="submit" class="btn btn-warning"><strong>Télécharger le résultat</strong></button>
+                <button name="action" value="boutonTelecharger" type="submit" class="btn btn-warning"><strong>Télécharger</strong></button>
             </div>
+        </form>
     </section>
     <footer><p>FERRERE Clément - MOMMALIER Victor - PONCET Clara - VELUT Lucile </p> |<p> DUT Informatique de Clermont-Ferrand </p></footer>
 
