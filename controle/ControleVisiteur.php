@@ -295,7 +295,10 @@ class ControleVisiteur
     public function generation() {
         global $chemin, $lesVues;
 
+        echo "Les valeurs dans la session sont bien récupérées :";
+
         $lesPhotos = $_SESSION['photos'];
+        if(empty($lesPhotos)) var_dump("PB");
         $nbPhotos = count($lesPhotos);
         $laCarte = $_SESSION['carte'];
         foreach ($lesPhotos[0]->panneau as $p){
@@ -306,6 +309,38 @@ class ControleVisiteur
         }
         var_dump($laCarte->sansExtension());
         var_dump($nbPhotos);
-        require($chemin . $lesVues['resultat']);
+
+
+
+        //CREATION DU FICHIER ZIP
+
+        $zip = new ZipArchive();
+        $ret = $zip->open('application.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
+        if ($ret !== TRUE) {
+            echo "A échoué avec le code d'erreur " . $ret;
+        } else {
+
+            //On ajoute les icones au fichier zip
+            $options = array('add_path' => 'sources/icones/', 'remove_all_path' => TRUE);
+            $retour=$zip->addGlob('./vues/photos/*.{png,PNG}', GLOB_BRACE, $options);
+            echo "On ajoute les icones au zip :";
+            var_dump($retour);
+
+            //On ajoute les photos uploadées au fichier zip
+            $options = array('add_path' => 'sources/photos/', 'remove_all_path' => TRUE);
+            $retour=$zip->addGlob('./photosUpload/*.{png,PNG,jpg,JPG}', GLOB_BRACE, $options);
+            echo "On ajoute les photos au zip :";
+            var_dump($retour);
+
+            //On ajoute le fichier résultat (qu'il faut appeler index.html)
+
+
+
+        }
+
+        $zip->close();
+
+
+        //require($chemin . $lesVues['resultat']);
     }
 }
