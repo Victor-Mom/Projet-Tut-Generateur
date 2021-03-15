@@ -295,25 +295,96 @@ class ControleVisiteur
     public function generation() {
         global $chemin, $lesVues;
 
-        echo "Les valeurs dans la session sont bien récupérées :";
-
         $lesPhotos = $_SESSION['photos'];
-        if(empty($lesPhotos)) var_dump("PB");
         $nbPhotos = count($lesPhotos);
         $laCarte = $_SESSION['carte'];
+
+        $entete = '<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Panorama</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-slice9-component/dist/aframe-slice9-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.5.1/dist/aframe-look-at-component.min.js"></script>
+</head>
+<body>
+<a-scene>';
+        $asset = '<a-assets>
+        <img id="fleche" src="Vues/photos/fleche.png" height="357" width="367" alt=""/>
+        <img id="map" src="Vues/photos/map.png" height="256" width="256" alt=""/>
+        <img id="tooltip" src="Vues/photos/tooltip.png" height="256" width="256" alt=""/>';
+        foreach ($lesPhotos as $photo) {
+            $asset .= '<img id="' . $photo->sansExtension() . '" src="photosUpload/' . $photo->getChemin() . '" height="2688" width="5376" alt=""/>';
+        }
+        $asset .= '<img id="' . $laCarte->sansExtension() . '" src="photosUpload/' . $laCarte->getChemin() . '" height="2688" width="5376" alt=""/>';
+        $asset .= '</a-assets>';
+
+        $skyBox = '<a-sky id="skybox" src="#' . $lesPhotos[0]->sansExtension() . '"></a-sky>';
+        $camera = '<a-entity id="cam" camera position="0 1.6 0" look-controls wasd-controls="enabled:false">
+        <a-entity cursor="fuse:true;fuseTimeout:2000"
+                  geometry="primitive:ring;radiusInner:0.01;radiusOuter:0.02"
+                  position="0 0 -1.8"
+                  material="shader:flat;color:blue">
+        </a-entity>
+    </a-entity>';
+
+        $lesGroupes = '<a-entity id="spots" hotspots>';
+        $lesGroupes .= '<a-entity id="group-' . $lesPhotos[0]->sansExtension() . '" scale="1 1 1">';
+        $lesGroupes .= '<a-image spot="linkto:#' . $laCarte->sansExtension() .
+            ';spotgroup:group-' . $laCarte->sansExtension() . '" 
+                position="-1 -3 -6" src="#map" look-at="#cam"></a-image>';
         foreach ($lesPhotos[0]->panneau as $p){
-            var_dump($p);
+            $lesGroupes .=  '<a-entity slice9="width: 5; height: 1; left: 20; right: 43; top: 20; bottom: 43;src: #tooltip"
+                          text="' . $p->message . '" ; 
+                          look-at="#cam" position="' . $p->position . '"></a-entity>';
         }
-        foreach ($lesPhotos[0]->pointNav as $nav){
-            var_dump($nav);
+        foreach ($lesPhotos[0]->pointNav as $nav) {
+            $lesGroupes .=  '<a-image spot="linkto:#' . $nav->sansExtension() .
+                ';spotgroup:group-' . $nav->sansExtension() . '"
+                    position="' . $nav->position . '" src="#fleche" look-at="#cam"></a-image>';
         }
-        var_dump($laCarte->sansExtension());
-        var_dump($nbPhotos);
+        $lesGroupes .=  '</a-entity>';
 
+        for ($i = 1 ; $i < $nbPhotos ; $i++) {
+            $lesGroupes .= '<a-entity id="group-' . $lesPhotos[$i]->sansExtension() . '" scale="0 0 0">';
+            $lesGroupes .= '<a-image spot="linkto:#' . $laCarte->sansExtension() . ';spotgroup:group-' . $laCarte->sansExtension() . '" 
+                        position="-1 -3 -6" src="#map" look-at="#cam"></a-image>';
+            foreach ($lesPhotos[$i]->panneau as $p){
+                $lesGroupes .= '<a-entity slice9="width: 5; height: 1; left: 20; right: 43; top: 20; bottom: 43;src: #tooltip"
+                          text="' . $p->message . '" ; 
+                          look-at="#cam" position="' . $p->position . '"></a-entity>';
+            }
+            foreach ($lesPhotos[$i]->pointNav as $nav) {
+                $lesGroupes .= '<a-image spot="linkto:#' . $nav->sansExtension() . ';spotgroup:group-' . $nav->sansExtension() . '"
+                         position="' . $nav->position . '" src="#fleche" look-at="#cam"></a-image>';
+            }
+            $lesGroupes .= '</a-entity>';
+        }
 
+        $lesGroupes .= '<a-entity id="group-' . $laCarte->sansExtension() . '" scale="0 0 0">';
+        foreach ($laCarte->pointNav as $nav) {
+            $lesGroupes .= '<a-image spot="linkto:#' . $nav->sansExtension() . ';spotgroup:group-' . $nav->sansExtension() . '"
+                             position="' . $nav->position . '" src="#fleche" look-at="#cam"></a-image>';
+        }
+        $lesGroupes .= '</a-entity>';
+        $lesGroupes .= '</a-entity>';
+
+        $fin = '</a-scene>
+
+</body>
+</html>';
+
+        $sauvegarde = $entete . $asset . $skyBox . $camera . $lesGroupes . $fin;
+
+        file_put_contents("index.html",$sauvegarde);
+
+        echo 'voili voilou normalement le HTML est généré';
+
+        require($chemin . $lesVues['tuto']);
 
         //CREATION DU FICHIER ZIP
-
+/*
         $zip = new ZipArchive();
         $ret = $zip->open('application.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
         if ($ret !== TRUE) {
@@ -338,7 +409,7 @@ class ControleVisiteur
 
         }
 
-        $zip->close();
+        $zip->close(); */
 
 
         //require($chemin . $lesVues['resultat']);
