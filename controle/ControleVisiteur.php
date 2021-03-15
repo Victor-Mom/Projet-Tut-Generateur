@@ -121,21 +121,20 @@ class ControleVisiteur
         if($cpt == $total_fichier_upload){
             $dir_nom = __DIR__."/../photosUpload";
             $dir =  opendir($dir_nom) or die('Erreur de listage : le répertoire n\'existe pas');
+            $lesPhotos = [];
 
-            $panorama = Panorama::getInstance($nomProjet);
             while(false !== ($element = readdir($dir))) {
                 if($element != '.' && $element != '..') {
                     $cheminPhoto = "";
                     $cheminPhoto .= $element;
                     $photo = new Photos($cheminPhoto);
-                    $panorama::addPhotos($photo);
+                    $lesPhotos [] = $photo;
                 }
             }
-            $_SESSION['panorama']=$panorama;
+            $_SESSION['photos']=$lesPhotos;
 
-            $_SESSION['photos']=$panorama::getListPhotos();
+            $_SESSION['titre']=$nomProjet;
 
-            $_SESSION['titre']=$panorama::getNom();
             closedir($dir);
             require($chemin . $lesVues['panorama']);
         }
@@ -311,13 +310,15 @@ class ControleVisiteur
 <body>
 <a-scene>';
         $asset = '<a-assets>
-        <img id="fleche" src="Vues/photos/fleche.png" height="357" width="367" alt=""/>
-        <img id="map" src="Vues/photos/map.png" height="256" width="256" alt=""/>
-        <img id="tooltip" src="Vues/photos/tooltip.png" height="256" width="256" alt=""/>';
+        <img id="fleche" src="icones/fleche.png" height="357" width="367" alt=""/>
+        <img id="map" src="icones/map.png" height="256" width="256" alt=""/>
+        <img id="tooltip" src="icones/tooltip.png" height="256" width="256" alt=""/>
+        <img id="fondBlanc" src="icones/fondBlanc.png" height="256" width="256" alt=""/>
+        <img id="logoJaune" src="icones/logoJaune.png" height="256" width="256" alt=""/>';
         foreach ($lesPhotos as $photo) {
-            $asset .= '<img id="' . $photo->sansExtension() . '" src="photosUpload/' . $photo->getChemin() . '" height="2688" width="5376" alt=""/>';
+            $asset .= '<img id="' . $photo->sansExtension() . '" src="photos/' . $photo->getChemin() . '" height="2688" width="5376" alt=""/>';
         }
-        $asset .= '<img id="' . $laCarte->sansExtension() . '" src="photosUpload/' . $laCarte->getChemin() . '" height="2688" width="5376" alt=""/>';
+        $asset .= '<img id="' . $laCarte->sansExtension() . '" src="photos/' . $laCarte->getChemin() . '" height="400" width="800" alt=""/>';
         $asset .= '</a-assets>';
 
         $skyBox = '<a-sky id="skybox" src="#' . $lesPhotos[0]->sansExtension() . '"></a-sky>';
@@ -331,8 +332,7 @@ class ControleVisiteur
 
         $lesGroupes = '<a-entity id="spots" hotspots>';
         $lesGroupes .= '<a-entity id="group-' . $lesPhotos[0]->sansExtension() . '" scale="1 1 1">';
-        $lesGroupes .= '<a-image spot="linkto:#' . $laCarte->sansExtension() .
-            ';spotgroup:group-' . $laCarte->sansExtension() . '" 
+        $lesGroupes .= '<a-image spot="linkto:#fondBlanc;spotgroup:group-fondBlanc" 
                 position="-1 -3 -6" src="#map" look-at="#cam"></a-image>';
         foreach ($lesPhotos[0]->panneau as $p){
             $lesGroupes .=  '<a-entity slice9="width: 5; height: 1; left: 20; right: 43; top: 20; bottom: 43;src: #tooltip"
@@ -348,7 +348,7 @@ class ControleVisiteur
 
         for ($i = 1 ; $i < $nbPhotos ; $i++) {
             $lesGroupes .= '<a-entity id="group-' . $lesPhotos[$i]->sansExtension() . '" scale="0 0 0">';
-            $lesGroupes .= '<a-image spot="linkto:#' . $laCarte->sansExtension() . ';spotgroup:group-' . $laCarte->sansExtension() . '" 
+            $lesGroupes .= '<a-image spot="linkto:#fondBlanc;spotgroup:group-fondBlanc" 
                         position="-1 -3 -6" src="#map" look-at="#cam"></a-image>';
             foreach ($lesPhotos[$i]->panneau as $p){
                 $lesGroupes .= '<a-entity slice9="width: 5; height: 1; left: 20; right: 43; top: 20; bottom: 43;src: #tooltip"
@@ -362,10 +362,12 @@ class ControleVisiteur
             $lesGroupes .= '</a-entity>';
         }
 
-        $lesGroupes .= '<a-entity id="group-' . $laCarte->sansExtension() . '" scale="0 0 0">';
+        $lesGroupes .= '<a-entity id="group-fondBlanc" scale="0 0 0">';
+        $lesGroupes .= '<a-plane position="-1.89574 1.6 -1.96425" src="#' . $laCarte->sansExtension() . '" look-at="#cam" height="4" width="6"  rotation="0 43.98317825991033 0">
+    </a-plane>';
         foreach ($laCarte->pointNav as $nav) {
             $lesGroupes .= '<a-image spot="linkto:#' . $nav->sansExtension() . ';spotgroup:group-' . $nav->sansExtension() . '"
-                             position="' . $nav->position . '" src="#fleche" look-at="#cam"></a-image>';
+                             position="' . $nav->position . '" src="#logoJaune" look-at="#cam"></a-image>';
         }
         $lesGroupes .= '</a-entity>';
         $lesGroupes .= '</a-entity>';
@@ -379,39 +381,49 @@ class ControleVisiteur
 
         file_put_contents("index.html",$sauvegarde);
 
-        echo 'voili voilou normalement le HTML est généré';
-
-        require($chemin . $lesVues['tuto']);
-
         //CREATION DU FICHIER ZIP
-/*
+
         $zip = new ZipArchive();
-        $ret = $zip->open('application.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
+        $ret = $zip->open(Validation::val_texte($_SESSION['titre']).'.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
         if ($ret !== TRUE) {
             echo "A échoué avec le code d'erreur " . $ret;
         } else {
 
             //On ajoute les icones au fichier zip
-            $options = array('add_path' => 'sources/icones/', 'remove_all_path' => TRUE);
-            $retour=$zip->addGlob('./vues/photos/*.{png,PNG}', GLOB_BRACE, $options);
-            echo "On ajoute les icones au zip :";
-            var_dump($retour);
+            $options = array('add_path' => 'icones/', 'remove_all_path' => TRUE);
+            $zip->addGlob('Vues/photos/fleche.png', GLOB_BRACE, $options);
+            $zip->addGlob('Vues/photos/fondBlanc.png', GLOB_BRACE, $options);
+            $zip->addGlob('Vues/photos/map.png', GLOB_BRACE, $options);
+            $zip->addGlob('Vues/photos/tooltip.png', GLOB_BRACE, $options);
+            $zip->addGlob('Vues/photos/logoJaune.png', GLOB_BRACE, $options);
 
             //On ajoute les photos uploadées au fichier zip
-            $options = array('add_path' => 'sources/photos/', 'remove_all_path' => TRUE);
-            $retour=$zip->addGlob('./photosUpload/*.{png,PNG,jpg,JPG}', GLOB_BRACE, $options);
-            echo "On ajoute les photos au zip :";
-            var_dump($retour);
+            $options = array('add_path' => 'photos/', 'remove_all_path' => TRUE);
+            $zip->addGlob('./photosUpload/*.{png,PNG,jpg,JPG}', GLOB_BRACE, $options);
 
             //On ajoute le fichier résultat (qu'il faut appeler index.html)
-
-
-
+            $options = array('add_path' => ' ', 'remove_all_path' => TRUE);
+            $zip->addGlob('index.html', GLOB_BRACE, $options);
         }
 
-        $zip->close(); */
+        $zip->close();
 
+        $file = Validation::val_texte($_SESSION['titre']).'.zip';
 
-        //require($chemin . $lesVues['resultat']);
+        if (file_exists($file)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="'.basename($file).'"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($file));
+            readfile($file);
+            exit;
+        }
+
+        session_unset();
+
+        require($chemin . $lesVues['accueil']);
     }
 }

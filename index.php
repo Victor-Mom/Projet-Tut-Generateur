@@ -10,7 +10,6 @@ Autoload::charger();
 
 //début de la session
 session_start();
-//unset($_SESSION['compteur']);
 
 $ctrl = new ControleVisiteur();
 

@@ -25,7 +25,7 @@
             <a class="nav-item nav-link active" href="index.php">Accueil</a>
         </div>
     </div>
-            <span class="text-white align-self-center align-content-lg-center"><?php echo Panorama::getNom();?></span>
+            <span class="text-white align-self-center align-content-lg-center"><?php echo Validation::val_texte($_SESSION['titre']);?></span>
 </nav>
 <br>
 
@@ -42,7 +42,7 @@
                 <label>
                     <select name="photo1">
                         <?php
-                        foreach (Panorama::getListPhotos() as $photo){
+                        foreach ($_SESSION['photos'] as $photo){
                             ?>
                             <option value="<?php echo $photo->getChemin();?>"><?php echo $photo->getChemin();?></option>
                             <?php
