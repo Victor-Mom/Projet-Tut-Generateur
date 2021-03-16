@@ -306,6 +306,8 @@ class ControleVisiteur
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-slice9-component/dist/aframe-slice9-component.min.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@0.5.1/dist/aframe-look-at-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-animation-component@^4.1.2/dist/aframe-animation-component.min.js"></script>
+    <script src="js/spots.js"></script>
 </head>
 <body>
 <a-scene>';
@@ -397,11 +399,15 @@ class ControleVisiteur
             $zip->addGlob('Vues/photos/tooltip.png', GLOB_BRACE, $options);
             $zip->addGlob('Vues/photos/logoJaune.png', GLOB_BRACE, $options);
 
+            //On ajoute le script JS
+            $options = array('add_path' => 'js/', 'remove_all_path' => TRUE);
+            $zip->addGlob('Vues/js/spots.js', GLOB_BRACE, $options);
+
             //On ajoute les photos uploadées au fichier zip
             $options = array('add_path' => 'photos/', 'remove_all_path' => TRUE);
             $zip->addGlob('./photosUpload/*.{png,PNG,jpg,JPG}', GLOB_BRACE, $options);
 
-            //On ajoute le fichier résultat (qu'il faut appeler index.html)
+            //On ajoute le fichier résultat
             $options = array('add_path' => ' ', 'remove_all_path' => TRUE);
             $zip->addGlob('index.html', GLOB_BRACE, $options);
         }
