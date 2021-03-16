@@ -26,7 +26,6 @@ AFRAME.registerComponent('spot',{
     init:function(){
 
         //add image source of hotspot icon
-        //this.el.setAttribute("src","#fleche");
         //make the icon look at the camera all the time
         this.el.setAttribute("look-at","#cam");
 
