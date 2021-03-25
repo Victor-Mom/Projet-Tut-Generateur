@@ -182,7 +182,7 @@ class ControleVisiteur
             $this->afficherCarte();
             return;
         }
-        $this->tableauErreur = $fileName . " : le fichier veut pas bouger (dsl)";
+        $this->tableauErreur = $fileName . " : erreur création fichier";
         require($chemin . $lesVues['formCarte']);
 
     }
@@ -314,9 +314,8 @@ class ControleVisiteur
         $asset = '<a-assets>
         <img id="fleche" src="icones/fleche.png" height="357" width="367" alt=""/>
         <img id="map" src="icones/map.png" height="256" width="256" alt=""/>
-        <img id="tooltip" src="icones/tooltip.png" height="256" width="256" alt=""/>
         <img id="fondBlanc" src="icones/fondBlanc.png" height="256" width="256" alt=""/>
-        <img id="logoJaune" src="icones/logoJaune.png" height="256" width="256" alt=""/>';
+        <img id="logoJaune" src="icones/logoJaune.png" alt=""/>';
         foreach ($lesPhotos as $photo) {
             $asset .= '<img id="' . $photo->sansExtension() . '" src="photos/' . $photo->getChemin() . '" height="2688" width="5376" alt=""/>';
         }
@@ -337,8 +336,8 @@ class ControleVisiteur
         $lesGroupes .= '<a-image spot="linkto:#fondBlanc;spotgroup:group-fondBlanc" 
                 position="-1 -3 -6" src="#map" look-at="#cam"></a-image>';
         foreach ($lesPhotos[0]->panneau as $p){
-            $lesGroupes .=  '<a-entity slice9="width: 5; height: 1; left: 20; right: 43; top: 20; bottom: 43;src: #tooltip"
-                          text="' . $p->message . '" ; 
+            $lesGroupes .=  '<a-entity slice9="width: 5; height: 1; left: 20; right: 43; top: 20; bottom: 43;src: icones/tooltip.png"
+                          text="value:' . $p->message . ';wrap-count:15; width:5; align:center;zOffset:0.05" ; 
                           look-at="#cam" position="' . $p->position . '"></a-entity>';
         }
         foreach ($lesPhotos[0]->pointNav as $nav) {
@@ -353,8 +352,8 @@ class ControleVisiteur
             $lesGroupes .= '<a-image spot="linkto:#fondBlanc;spotgroup:group-fondBlanc" 
                         position="-1 -3 -6" src="#map" look-at="#cam"></a-image>';
             foreach ($lesPhotos[$i]->panneau as $p){
-                $lesGroupes .= '<a-entity slice9="width: 5; height: 1; left: 20; right: 43; top: 20; bottom: 43;src: #tooltip"
-                          text="' . $p->message . '" ; 
+                $lesGroupes .= '<a-entity slice9="width: 5; height: 1; left: 20; right: 43; top: 20; bottom: 43;src: icones/tooltip.png"
+                          text="value:' . $p->message . ';wrap-count:15; width:5; align:center;zOffset:0.05" ; 
                           look-at="#cam" position="' . $p->position . '"></a-entity>';
             }
             foreach ($lesPhotos[$i]->pointNav as $nav) {
@@ -369,7 +368,7 @@ class ControleVisiteur
     </a-plane>';
         foreach ($laCarte->pointNav as $nav) {
             $lesGroupes .= '<a-image spot="linkto:#' . $nav->sansExtension() . ';spotgroup:group-' . $nav->sansExtension() . '"
-                             position="' . $nav->position . '" src="#logoJaune" look-at="#cam"></a-image>';
+                             height="0.480" width="0.300" position="' . $nav->position . '" src="#logoJaune" look-at="#cam"></a-image>';
         }
         $lesGroupes .= '</a-entity>';
         $lesGroupes .= '</a-entity>';
