@@ -416,6 +416,7 @@ class ControleVisiteur
         $file = Validation::val_texte($_SESSION['titre']).'.zip';
 
         if (file_exists($file)) {
+            ob_start();
             header('Content-Description: File Transfer');
             header('Content-Type: application/octet-stream');
             header('Content-Disposition: attachment; filename="'.basename($file).'"');
@@ -423,6 +424,9 @@ class ControleVisiteur
             header('Cache-Control: must-revalidate');
             header('Pragma: public');
             header('Content-Length: ' . filesize($file));
+            while (ob_get_level()) {
+                ob_end_clean();
+            }
             readfile($file);
             exit;
         }
